@@ -1,0 +1,17 @@
+.navbar {
+    display: flex;
+    justify-content: center;
+    background-color: #06113C;
+}
+
+.listItems {
+    display: flex;
+    list-style-type: none;
+}
+
+.listItems li {
+    margin-right: 3rem;
+    color: white;
+    font-size: large;
+    font-weight: bold;
+}
