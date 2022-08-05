@@ -1,13 +1,14 @@
 import React from 'react';
 import styles from './Navbar.module.css'
+import Link from "next/link";
 
 function Index() {
     return (
         <div className={styles.navbar}>
             <ul className={styles.listItems}>
-                <li>Home</li>
-                <li>Movies</li>
-                <li>TV Shows</li>
+                <li><Link href={'/'}><a>Home</a></Link></li>
+                <li><Link href={'/'}><a>Movies</a></Link></li>
+                <li><Link href={'/'}><a>TV Shows</a></Link></li>
             </ul>
         </div>
     );

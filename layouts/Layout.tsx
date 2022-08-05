@@ -23,10 +23,11 @@ export const Layout: FC<PropsWithChildren<Props>> = ({children, title, pageDescr
             <nav>
                 <Navbar/>
             </nav>
-            <main style={{
-                margin:'10px auto',
-                padding:'0px 30px'
-            }}>
+            {/*<main style={{*/}
+            {/*    margin:'10px auto',*/}
+            {/*    padding:'0px 30px'*/}
+            {/*}}>*/}
+            <main>
                 {children}
             </main>
         </div>

@@ -1,0 +1,66 @@
+.infoContainer {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    height: 30rem;
+    color: white;
+    background: linear-gradient(0deg, rgba(6,17,60,0.7021009087228641) 100%, rgba(253,187,45,1) 100%);
+}
+
+.infoContainer h1 {
+    margin-bottom: 0;
+}
+
+.infoContainer p {
+    margin: 0
+}
+
+.movieDetails {
+    margin: 0 2rem;
+}
+
+.yearTitle {
+    opacity: 0.8;
+    font-weight: 400;
+    /*font-weight: bold;*/
+    font-size: x-large;
+}
+
+.detailTitles{
+    font-weight: bold;
+    font-size: x-large;
+}
+
+.underTitleDetails {
+    display: flex;
+}
+
+.underTitleReleaseDate {
+    padding-right: 25px;
+}
+
+.underTitleGenres {
+    padding-left: 5px;
+}
+
+.movieOverview {
+    max-width: 50rem;
+}
+
+.headerSection{
+    margin-top: 2rem;
+}
+
+.headerBottom {
+    display: flex;
+    margin-top: 2rem;
+}
+
+.productionCompanies {
+    margin-left: 5rem;
+}
+
+.movieTagline {
+    font-style: italic;
+    opacity: 0.8;
+}

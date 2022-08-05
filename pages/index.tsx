@@ -1,6 +1,7 @@
  import {FC, PropsWithChildren, useState} from "react";
-import Image from "next/image";
 import {GetServerSideProps} from "next";
+import Image from "next/image";
+import Link from 'next/link'
 import {Layout} from "../layouts";
 import axios from "axios";
 import {TrendingMovieData, TrendingTvData, TrendingPersonData} from "../interfaces";
@@ -51,10 +52,12 @@ const Home: FC<PropsWithChildren<trendingData>> = ({trendingMovieData, trendingT
             <div className={styles.trendingSection}>
                 {trendingMovieData.results.slice(0,10).map((movie, i)=>{
                     return (
-                        <div className={styles.trendingCard} key={i}>
-                            <Image className={styles.coverImage} src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} width={130} height={200} blurDataURL={'/favicon.ico'} placeholder="blur" />
-                            <p className={styles.trendingCardMovieTitle}>{movie.title}</p>
-                        </div>
+                        <Link href={`/movie/${movie.id}`} key={i}>
+                            <div className={styles.trendingCard} key={i}>
+                                <Image className={styles.coverImage} src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} width={130} height={200} blurDataURL={'/favicon.ico'} placeholder="blur" />
+                                <p className={styles.trendingCardMovieTitle}>{movie.title}</p>
+                            </div>
+                        </Link>
                     )
                 })}
             </div>

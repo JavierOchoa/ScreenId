@@ -9,9 +9,14 @@
     list-style-type: none;
 }
 
-.listItems li {
+.listItems li a {
     margin-right: 3rem;
     color: white;
     font-size: large;
     font-weight: bold;
+    text-decoration: none
+}
+
+.link{
+    text-decoration: none
 }
