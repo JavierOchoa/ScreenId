@@ -1,16 +1,25 @@
 import { PropsWithChildren, FC} from "react";
 import {GetServerSideProps} from "next";
 import axios from "axios";
-import {DetailedMovie} from '../../interfaces'
+import {DetailedMovie, ExternalLinks, MovieCredits, MovieVideos} from '../../interfaces'
 import {Layout} from "../../layouts";
 import Image from "next/image";
 import styles from '../../styles/Movie.module.css'
+import PeopleSection from "../../components/People";
+import VideoSection from "../../components/VideoSection";
+import MovieRecommendations from "../../components/MovieRecommendations";
+import {ImovieRecommendations} from "../../interfaces/ImovieRecommendations";
 
 interface Props {
     movieInfo: DetailedMovie;
+    movieCast: MovieCredits;
+    movieVideos: MovieVideos;
+    movieRecommendations: ImovieRecommendations;
+    externalIDs: ExternalLinks
 }
 
-const MovieExtended: FC<PropsWithChildren<Props>> = ({movieInfo}) => {
+const MovieExtended: FC<PropsWithChildren<Props>> = ({movieInfo, movieCast, movieVideos, movieRecommendations, externalIDs}) => {
+    const dollarUSLocale = Intl.NumberFormat('en-US');
     return (
         <Layout title={movieInfo.title} pageDescription={movieInfo.overview}>
             <div style={{backgroundImage: `url(https://image.tmdb.org/t/p/original${movieInfo.backdrop_path})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
@@ -52,15 +61,54 @@ const MovieExtended: FC<PropsWithChildren<Props>> = ({movieInfo}) => {
                     </div>
                 </div>
             </div>
+            <div className={styles.pageContent}>
+                <div className={styles.mainContainer}>
+                    <h2>Cast</h2>
+                    <PeopleSection people={movieCast}/>
+                    <h2>Videos</h2>
+                    <VideoSection videoData={movieVideos}/>
+                    <MovieRecommendations recommendations={movieRecommendations} />
+                </div>
+                <div className={styles.sideBar}>
+                    <div className={styles.sideBarSection}>
+                        <p className={styles.sideBarTitle}>Status</p>
+                        <p className={styles.sideBarInfo}>{movieInfo.status}</p>
+                    </div>
+                    <div className={styles.sideBarSection}>
+                        <p className={styles.sideBarTitle}>Made in</p>
+                        {movieInfo.production_countries.map((country, i)=>{
+                            return(
+                                <p key={i} className={styles.sideBarInfo}>{country.name}</p>
+                            )
+                        })}
+                    </div>
+                    {movieInfo.revenue !== 0 &&
+                        <div className={styles.sideBarSection}>
+                            <p className={styles.sideBarTitle}>Revenue</p>
+                            <p className={styles.sideBarInfo}>${dollarUSLocale.format(movieInfo.revenue)}</p>
+                        </div>
+                    }
+                    //TODO: ExternalLinks
+                </div>
+            </div>
         </Layout>
     )
 }
 
 export const getServerSideProps: GetServerSideProps = async ( context) => {
     const {query} = context
-    const {data} = await axios.get(`https://api.themoviedb.org/3/movie/${query.id}?api_key=${process.env.NEXT_PUBLIC_TMDB}&language=en-US`)
+    const {data: movieInfo} = await axios.get(`https://api.themoviedb.org/3/movie/${query.id}?api_key=${process.env.NEXT_PUBLIC_TMDB}&language=en-US`)
+    const {data: movieCast} = await axios.get(`https://api.themoviedb.org/3/movie/${query.id}/credits?api_key=${process.env.NEXT_PUBLIC_TMDB}&language=en-US`)
+    const {data: movieVideos} = await axios.get(`https://api.themoviedb.org/3/movie/${query.id}/videos?api_key=${process.env.NEXT_PUBLIC_TMDB}&language=en-US`)
+    const {data: movieRecommendations} = await axios.get(`https://api.themoviedb.org/3/movie/${query.id}/recommendations?api_key=${process.env.NEXT_PUBLIC_TMDB}&language=en-US&page=1`)
+    const {data: movieExternals} = await axios.get(`https://api.themoviedb.org/3/movie/${query.id}/external_ids?api_key=${process.env.NEXT_PUBLIC_TMDB}`)
+
     return {props:{
-        movieInfo: data
+            movieInfo,
+            movieCast,
+            movieVideos,
+            movieRecommendations,
+            movieExternals
         }
     }
 }

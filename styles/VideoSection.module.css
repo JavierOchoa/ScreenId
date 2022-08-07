@@ -1,0 +1,10 @@
+.videoContainer {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    /*width: 80vw;*/
+}
+.videoCard {
+    flex: 0 0 auto;
+    margin: 0 0.5rem;
+}

@@ -64,3 +64,32 @@
     font-style: italic;
     opacity: 0.8;
 }
+
+.pageContent{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5rem;
+}
+
+.sideBar{
+    width: 20vw;
+    padding: 0 1rem;
+}
+
+.sideBarSection {
+    margin-bottom: 2rem;
+}
+
+.sideBarTitle {
+    font-weight: bold;
+    font-size: large;
+    margin-bottom: 0.2rem;
+}
+
+.sideBarInfo {
+    margin: 0;
+}
+
+.mainContainer{
+    width: 80vw;
+}
