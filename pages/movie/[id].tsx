@@ -1,24 +1,24 @@
 import { PropsWithChildren, FC} from "react";
 import {GetServerSideProps} from "next";
 import axios from "axios";
-import {DetailedMovie, ExternalLinks, MovieCredits, MovieVideos} from '../../interfaces'
+import {DetailedMovie, ExternalLinks, MovieCredits, MovieVideos, ImovieRecommendations} from '../../interfaces'
 import {Layout} from "../../layouts";
 import Image from "next/image";
 import styles from '../../styles/Movie.module.css'
 import PeopleSection from "../../components/People";
 import VideoSection from "../../components/VideoSection";
-import MovieRecommendations from "../../components/MovieRecommendations";
-import {ImovieRecommendations} from "../../interfaces/ImovieRecommendations";
+import MovieRecommendations from "../../components/Recommendations";
+import SidebarSocials from "../../components/SidebarSocials";
 
 interface Props {
     movieInfo: DetailedMovie;
     movieCast: MovieCredits;
     movieVideos: MovieVideos;
     movieRecommendations: ImovieRecommendations;
-    externalIDs: ExternalLinks
+    movieExternals: ExternalLinks
 }
 
-const MovieExtended: FC<PropsWithChildren<Props>> = ({movieInfo, movieCast, movieVideos, movieRecommendations, externalIDs}) => {
+const MovieExtended: FC<PropsWithChildren<Props>> = ({movieInfo, movieCast, movieVideos, movieRecommendations, movieExternals}) => {
     const dollarUSLocale = Intl.NumberFormat('en-US');
     return (
         <Layout title={movieInfo.title} pageDescription={movieInfo.overview}>
@@ -67,7 +67,7 @@ const MovieExtended: FC<PropsWithChildren<Props>> = ({movieInfo, movieCast, movi
                     <PeopleSection people={movieCast}/>
                     <h2>Videos</h2>
                     <VideoSection videoData={movieVideos}/>
-                    <MovieRecommendations recommendations={movieRecommendations} />
+                    <MovieRecommendations movieRecommendations={movieRecommendations} type={'movie'}/>
                 </div>
                 <div className={styles.sideBar}>
                     <div className={styles.sideBarSection}>
@@ -88,7 +88,7 @@ const MovieExtended: FC<PropsWithChildren<Props>> = ({movieInfo, movieCast, movi
                             <p className={styles.sideBarInfo}>${dollarUSLocale.format(movieInfo.revenue)}</p>
                         </div>
                     }
-                    //TODO: ExternalLinks
+                <SidebarSocials socialData={movieExternals}/>
                 </div>
             </div>
         </Layout>

@@ -52,12 +52,14 @@ const Home: FC<PropsWithChildren<trendingData>> = ({trendingMovieData, trendingT
             <div className={styles.trendingSection}>
                 {trendingMovieData.results.slice(0,10).map((movie, i)=>{
                     return (
-                        <Link href={`/movie/${movie.id}`} key={i}>
-                            <div className={styles.trendingCard} key={i}>
-                                <Image className={styles.coverImage} src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} width={130} height={200} blurDataURL={'/favicon.ico'} placeholder="blur" />
-                                <p className={styles.trendingCardMovieTitle}>{movie.title}</p>
-                            </div>
-                        </Link>
+                        <div className={styles.trendingCard} key={i}>
+                            <Link href={`/movie/${movie.id}`} key={i}>
+                                <a>
+                                    <Image className={styles.coverImage} src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} width={130} height={200} blurDataURL={'/favicon.ico'} placeholder="blur" />
+                                    <p className={styles.trendingCardMovieTitle}>{movie.title}</p>
+                                </a>
+                            </Link>
+                        </div>
                     )
                 })}
             </div>
@@ -68,8 +70,12 @@ const Home: FC<PropsWithChildren<trendingData>> = ({trendingMovieData, trendingT
                 {trendingTvData.results.slice(0,10).map((show, i)=>{
                     return (
                         <div className={styles.trendingCard} key={i}>
-                            <Image className={styles.coverImage} src={`https://image.tmdb.org/t/p/w500${show.poster_path}`} alt={show.name} width={130} height={200} />
-                            <p className={styles.trendingCardMovieTitle}>{show.name}</p>
+                            <Link href={`/tv/${show.id}`} key={i}>
+                                <a>
+                                    <Image className={styles.coverImage} src={`https://image.tmdb.org/t/p/w500${show.poster_path}`} alt={show.name} width={130} height={200} />
+                                    <p className={styles.trendingCardMovieTitle}>{show.name}</p>
+                                </a>
+                            </Link>
                         </div>
                     )
                 })}

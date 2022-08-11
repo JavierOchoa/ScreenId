@@ -1,0 +1,27 @@
+.seasonContainer{
+    display: flex;
+    /*flex-direction: column;*/
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin: 1rem 0.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.5);
+}
+
+.seasonInformationContainer{
+    padding: 0.5rem;
+    width: 80vw;
+}
+
+.seasonEmphasis{
+    font-weight: bold;
+}
+
+.titleDateContainer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.seasonOverview{
+    margin: 0;
+}

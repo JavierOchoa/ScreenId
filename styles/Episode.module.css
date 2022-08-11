@@ -1,0 +1,26 @@
+.episodeContainer{
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin: 0 0.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.5);
+}
+
+.episodeInformationContainer{
+    padding: 0.5rem;
+    width: 80vw;
+}
+
+.episodeEmphasis{
+    font-weight: bold;
+}
+
+.titleDateContainer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.episodeOverview{
+    margin: 0;
+}

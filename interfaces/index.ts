@@ -5,3 +5,6 @@ export * from './detailedMovie';
 export * from './movieCredits';
 export * from './movieVideos';
 export * from './externalLinks'
+export * from './detailedTv';
+export * from './ImovieRecommendations';
+export * from './ITVRecommendations'

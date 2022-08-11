@@ -93,3 +93,11 @@
 .mainContainer{
     width: 80vw;
 }
+.linksContainer{
+    display: flex;
+    margin-top: 1rem;
+}
+
+.socialLink {
+    margin: 0 1rem;
+}
