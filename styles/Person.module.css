@@ -1,0 +1,24 @@
+.personContainer {
+    display: flex;
+    padding: 2rem 5rem;
+}
+
+.infoContainer {
+    padding: 0 1rem;
+    width: 80vw;
+}
+
+.subtitle {
+    font-weight: bold;
+    margin: 0;
+}
+
+.info {
+    margin: 0 0 1rem 0;
+}
+
+.profilePic{
+    border-radius: 0.6rem;
+    overflow: hidden;
+    background-color: #06113C;
+}

@@ -7,4 +7,8 @@ export * from './movieVideos';
 export * from './externalLinks'
 export * from './detailedTv';
 export * from './ImovieRecommendations';
-export * from './ITVRecommendations'
+export * from './ITVRecommendations';
+export * from './personInformation';
+export * from './personMovieCredits';
+export * from './personTvCredits';
+export * from './personCombinedCredits';

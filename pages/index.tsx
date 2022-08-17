@@ -87,8 +87,12 @@ const Home: FC<PropsWithChildren<trendingData>> = ({trendingMovieData, trendingT
                 {trendingPersonData.results.filter(person=> person.profile_path !== null).slice(0,10).map((person, i)=>{
                     return (
                         <div className={styles.trendingCard} key={i}>
-                            <Image className={styles.personImage} src={`https://image.tmdb.org/t/p/w500${person.profile_path}`} alt={person.original_name} width={130} height={200} />
-                            <p className={styles.trendingCardMovieTitle}>{person.original_name}</p>
+                            <Link href={`/person/${person.id}`}>
+                                <a>
+                                    <Image className={styles.personImage} src={`https://image.tmdb.org/t/p/w500${person.profile_path}`} alt={person.original_name} width={130} height={200} />
+                                    <p className={styles.trendingCardMovieTitle}>{person.original_name}</p>
+                                </a>
+                            </Link>
                         </div>
                     )
                 })}

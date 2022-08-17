@@ -1,0 +1,41 @@
+.creditInfoContainer{
+    display: flex;
+}
+
+.selectDropdown{
+    height: 2rem;
+}
+
+.yearSelection{
+    display: flex;
+    margin: auto;
+}
+
+.yearSelection p{
+    margin: auto 1rem;
+    font-weight: lighter;
+}
+
+.titlesContainer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.primaryText{
+    font-weight: bold;
+}
+
+.secondaryText{
+    font-weight: lighter;
+    font-style: italic;
+}
+
+.creditInfoContainer p {
+    margin-left: 1rem;
+}
+
+.creditInfoContainer a{
+    text-decoration: none;
+    color: black;
+}
+
