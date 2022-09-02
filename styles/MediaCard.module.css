@@ -1,0 +1,30 @@
+.trendingCard {
+    /*padding: 0 2rem;*/
+    display: flex;
+    margin: 0.5rem;
+    flex-direction: column;
+    align-items: center;
+    width: 180px;
+}
+
+.trendingCard a {
+    text-decoration: none;
+}
+
+.trendingCardMediaTitle{
+    font-weight: bold;
+    font-size: small;
+    text-align: center;
+    color: white;
+    padding: 0 1rem;
+}
+
+.coverImage {
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.cardImageTitle {
+    padding: 0 0 0.5rem;
+    border-radius: 0.5rem;
+    background-color: #06113C;
+}

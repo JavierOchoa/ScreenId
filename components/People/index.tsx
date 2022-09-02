@@ -1,29 +1,23 @@
 import {FC, PropsWithChildren} from "react";
-import {MovieCredits} from "../../interfaces";
+import {MovieCredits, TrendingPersonData} from "../../interfaces";
 import Image from "next/image";
 import styles from "../../styles/People.module.css";
 import Link from "next/link";
+import PersonCard from "../PersonCard";
 
 interface castingData {
-    people: MovieCredits
+    castPeople: MovieCredits
 }
 
-const PeopleSection: FC<PropsWithChildren<castingData>> = ({people}) => {
+const PeopleSection: FC<PropsWithChildren<castingData>> = ({castPeople}) => {
     return(
         <div className={styles.personContainer}>
-            {people.cast.map((person, i) => {
-                return(
-                        <div className={styles.PersonCard} key={i}>
-                            <Link href={`/person/${person.id}`}>
-                                <a>
-                                    <Image className={styles.personImage} src={`https://image.tmdb.org/t/p/w500${person.profile_path}`} alt={person.original_name} width={130} height={200} />
-                                    <p className={styles.personName}>{person.original_name}</p>
-                                    <p className={styles.personCharacter}>{person.character}</p>
-                                </a>
-                            </Link>
-                        </div>
-                )
-            })}
+            {castPeople.cast.map((person, i) => {
+                    return(
+                        <PersonCard key={i} id={person.id} original_name={person.original_name} profile_path={person.profile_path || 'null'} type={'cast'} character={person.character}/>
+                    )
+                })
+            }
         </div>
     )
 }

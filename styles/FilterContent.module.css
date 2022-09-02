@@ -1,0 +1,52 @@
+.mainContainer {
+    display: flex;
+    padding: 4rem;
+}
+.resultContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 80vw;
+    padding: 0 1rem;
+
+}
+
+.filterContainer {
+    width: 15vw;
+    /*padding-right: 4rem;*/
+}
+
+.filtersTitle{
+    font-weight: bold;
+    font-size: x-large;
+}
+
+.filterSubtitle {
+    font-weight: bold;
+}
+
+.scoreSliderValueContainer{
+    display: flex;
+}
+
+.scoreSliderValueContainer p {
+    margin: 0 1rem;
+}
+
+.filterContainer {
+    background-color: #e0e0e0;
+    /*height: content-box;*/
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.filterSearchButton {
+    background-color: #06113C;
+    color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    margin: 2rem 0 1rem 0;
+    cursor: pointer;
+    border: none;
+}

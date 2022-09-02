@@ -1,0 +1,7 @@
+.trendingContainer{
+    padding: 0 2rem;
+}
+.trendingSection {
+    display: flex;
+    justify-content: center;
+}

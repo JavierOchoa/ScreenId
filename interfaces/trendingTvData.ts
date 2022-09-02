@@ -1,11 +1,11 @@
 export interface TrendingTvData {
     page:          number;
-    results:       Result[];
+    results:       TrendingTvResult[];
     total_pages:   number;
     total_results: number;
 }
 
-interface Result {
+export interface TrendingTvResult {
     adult:             boolean;
     backdrop_path:     string;
     id:                number;

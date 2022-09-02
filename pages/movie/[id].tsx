@@ -64,7 +64,7 @@ const MovieExtended: FC<PropsWithChildren<Props>> = ({movieInfo, movieCast, movi
             <div className={styles.pageContent}>
                 <div className={styles.mainContainer}>
                     <h2>Cast</h2>
-                    <PeopleSection people={movieCast}/>
+                    <PeopleSection castPeople={movieCast}/>
                     <h2>Videos</h2>
                     <VideoSection videoData={movieVideos}/>
                     <MovieRecommendations movieRecommendations={movieRecommendations} type={'movie'}/>

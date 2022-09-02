@@ -1,11 +1,11 @@
 export interface TrendingMovieData {
     page:          number;
-    results:       Result[];
+    results:       TrendingMovieResult[];
     total_pages:   number;
     total_results: number;
 }
 
-interface Result {
+export interface TrendingMovieResult {
     adult:             boolean;
     backdrop_path:     string;
     id:                number;

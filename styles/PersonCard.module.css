@@ -1,0 +1,28 @@
+.PersonCard {
+    padding: 0 1.5rem;
+    flex: 0 0 auto;
+    align-items: center;
+    width: 130px;
+}
+.trendingImage {
+    border-radius: 50%;
+}
+
+.castImage {
+    border-radius: 10%;
+}
+
+.personName{
+    margin: 0;
+    font-weight: bold;
+    font-size: small;
+    text-align: center;
+}
+
+.personCharacter{
+    margin: 0;
+    font-size: small;
+    text-align: center;
+    font-style: italic;
+    opacity: 0.8;
+}

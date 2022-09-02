@@ -8,6 +8,8 @@ import {TrendingMovieData, TrendingTvData, TrendingPersonData} from "../interfac
  import { Carousel } from 'react-responsive-carousel';
 import styles from '../styles/Home.module.css';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+ import MediaCard from "../components/MediaCard";
+ import TrendingSection from "../components/TrendingSection";
 
  interface trendingData {
      trendingMovieData: TrendingMovieData,
@@ -16,10 +18,11 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
  }
 
 const Home: FC<PropsWithChildren<trendingData>> = ({trendingMovieData, trendingTvData, trendingPersonData}) => {
+     //TODO: dynamic content in slider
      const [movieInSlider, setMovieInSlider] = useState(0);
 
      return (
-    <Layout title={'Home'} pageDescription={'Discover the latest Movies, TV Shows and Artists'}>
+    <Layout title={'Home'} pageDescription={'Discover the latest FilterContent, TV Shows and Artists'}>
       <Carousel
           showStatus={false}
           showThumbs={false}
@@ -47,57 +50,9 @@ const Home: FC<PropsWithChildren<trendingData>> = ({trendingMovieData, trendingT
               )
           })}
       </Carousel>
-        <div>
-            <h2>Trending Movies</h2>
-            <div className={styles.trendingSection}>
-                {trendingMovieData.results.slice(0,10).map((movie, i)=>{
-                    return (
-                        <div className={styles.trendingCard} key={i}>
-                            <Link href={`/movie/${movie.id}`} key={i}>
-                                <a>
-                                    <Image className={styles.coverImage} src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} width={130} height={200} blurDataURL={'/favicon.ico'} placeholder="blur" />
-                                    <p className={styles.trendingCardMovieTitle}>{movie.title}</p>
-                                </a>
-                            </Link>
-                        </div>
-                    )
-                })}
-            </div>
-        </div>
-        <div>
-            <h2>Trending TV Shows</h2>
-            <div className={styles.trendingSection}>
-                {trendingTvData.results.slice(0,10).map((show, i)=>{
-                    return (
-                        <div className={styles.trendingCard} key={i}>
-                            <Link href={`/tv/${show.id}`} key={i}>
-                                <a>
-                                    <Image className={styles.coverImage} src={`https://image.tmdb.org/t/p/w500${show.poster_path}`} alt={show.name} width={130} height={200} />
-                                    <p className={styles.trendingCardMovieTitle}>{show.name}</p>
-                                </a>
-                            </Link>
-                        </div>
-                    )
-                })}
-            </div>
-        </div>
-        <div>
-            <h2>Trending People</h2>
-            <div className={styles.trendingSection}>
-                {trendingPersonData.results.filter(person=> person.profile_path !== null).slice(0,10).map((person, i)=>{
-                    return (
-                        <div className={styles.trendingCard} key={i}>
-                            <Link href={`/person/${person.id}`}>
-                                <a>
-                                    <Image className={styles.personImage} src={`https://image.tmdb.org/t/p/w500${person.profile_path}`} alt={person.original_name} width={130} height={200} />
-                                    <p className={styles.trendingCardMovieTitle}>{person.original_name}</p>
-                                </a>
-                            </Link>
-                        </div>
-                    )
-                })}
-            </div>
-        </div>
+        <TrendingSection length={10} movies={trendingMovieData}/>
+        <TrendingSection length={10} shows={trendingTvData} />
+        <TrendingSection length={10} people={trendingPersonData} />
     </Layout>
   )
 }

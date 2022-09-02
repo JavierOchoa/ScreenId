@@ -64,7 +64,7 @@ const TVPage:FC<PropsWithChildren<Props>> = ({TVData, TVCast, TVVideos, TVRecomm
             <div className={styles.pageContent}>
                 <div className={styles.mainContainer}>
                     <h2>Cast</h2>
-                    <PeopleSection people={TVCast}/>
+                    <PeopleSection castPeople={TVCast}/>
                     {TVData.status === 'Returning Series' &&
                         <div>
                             {TVData.next_episode_to_air &&

@@ -1,11 +1,11 @@
 export interface TrendingPersonData {
     page:          number;
-    results:       Result[];
+    results:       TrendingPersonResult[];
     total_pages:   number;
     total_results: number;
 }
 
-interface Result {
+export interface TrendingPersonResult {
     adult:                boolean;
     id:                   number;
     name:                 string;

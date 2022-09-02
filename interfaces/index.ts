@@ -12,3 +12,4 @@ export * from './personInformation';
 export * from './personMovieCredits';
 export * from './personTvCredits';
 export * from './personCombinedCredits';
+export * from './mediaGenres';

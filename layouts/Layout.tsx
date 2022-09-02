@@ -27,6 +27,8 @@ export const Layout: FC<PropsWithChildren<Props>> = ({children, title, pageDescr
             {/*    margin:'10px auto',*/}
             {/*    padding:'0px 30px'*/}
             {/*}}>*/}
+            {/*        {children}*/}
+            {/*</main>*/}
             <main>
                 {children}
             </main>
