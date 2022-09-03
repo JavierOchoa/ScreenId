@@ -7,7 +7,7 @@
     flex-wrap: wrap;
     justify-content: center;
     width: 80vw;
-    padding: 0 1rem;
+    /*padding: 0 1rem;*/
 
 }
 
@@ -40,7 +40,7 @@
     border-radius: 0.5rem;
 }
 
-.filterSearchButton {
+.filterResetButton {
     background-color: #06113C;
     color: white;
     padding: 1rem;
@@ -49,4 +49,22 @@
     margin: 2rem 0 1rem 0;
     cursor: pointer;
     border: none;
+}
+
+.filterLoadMoreButton {
+    background-color: #06113C;
+    font-size: x-large;
+    color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    margin: 2rem 0 1rem 0;
+    cursor: pointer;
+    border: none;
+}
+
+.mediaContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import trendingMoviesReducer from './slices/trendingMoviesSlice';
+import trendingShowsReducer from './slices/trendingShowsSlice';
 
 export const store = configureStore({
     reducer: {
-        trendingMovies: trendingMoviesReducer
+        trendingMovies: trendingMoviesReducer,
+        trendingShows: trendingShowsReducer
     },
 })
 

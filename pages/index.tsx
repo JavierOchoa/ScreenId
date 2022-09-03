@@ -8,7 +8,6 @@ import {TrendingMovieData, TrendingTvData, TrendingPersonData} from "../interfac
  import { Carousel } from 'react-responsive-carousel';
 import styles from '../styles/Home.module.css';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
- import MediaCard from "../components/MediaCard";
  import TrendingSection from "../components/TrendingSection";
 
  interface trendingData {
@@ -35,17 +34,23 @@ const Home: FC<PropsWithChildren<trendingData>> = ({trendingMovieData, trendingT
       >
           {trendingMovieData.results.slice(0,10).map((movie, i) =>{
               return(
-                  <div className={styles.movieSliderContainer} key={i}>
-                      <div>
-                          <h3 className={styles.movieSliderMovieTitle}>{movie.title}</h3>
-                          <div>
-                              <p className={styles.movieSliderTitles}>Overview</p>
-                              <p className={styles.movieSliderOverview}>{movie.overview}</p>
-                              <p className={styles.movieSliderTitles}>Rating</p>
-                              <p>{movie.vote_average.toFixed(1)}/10</p>
-                          </div>
-                      </div>
-                      <Image src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} width={400} height={600}/>
+                  <div style={{backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`, backgroundSize: 'cover', backgroundPosition: 'center'}} key={i}>
+                      <Link href={`movie/${movie.id}`}>
+                          <a className={styles.anchor}>
+                              <div className={styles.movieSliderContainer}>
+                                  <div>
+                                      <h3 className={styles.movieSliderMovieTitle}>{movie.title}</h3>
+                                      <div>
+                                          <p className={styles.movieSliderTitles}>Overview</p>
+                                          <p className={styles.movieSliderOverview}>{movie.overview}</p>
+                                          <p className={styles.movieSliderTitles}>Rating</p>
+                                          <p>{movie.vote_average.toFixed(1)}/10</p>
+                                      </div>
+                                  </div>
+                                  <Image src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} width={400} height={600}/>
+                              </div>
+                          </a>
+                      </Link>
                   </div>
               )
           })}

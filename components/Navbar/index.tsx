@@ -8,7 +8,7 @@ function Index() {
             <ul className={styles.listItems}>
                 <li><Link href={'/'}><a>Home</a></Link></li>
                 <li><Link href={'/movies'}><a>Movies</a></Link></li>
-                <li><Link href={'/'}><a>TV Shows</a></Link></li>
+                <li><Link href={'/shows'}><a>TV Shows</a></Link></li>
             </ul>
         </div>
     );

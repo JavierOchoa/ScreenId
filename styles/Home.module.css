@@ -29,9 +29,16 @@
     border-radius: 0.5rem;
 }
 
+.anchor {
+    text-decoration: none;
+}
+
 .movieSliderContainer{
     display: flex;
     justify-content: space-evenly;
+    padding: 2rem;
+    color: white;
+    background: linear-gradient(0deg, rgba(6,17,60,0.7021009087228641) 100%, rgba(253,187,45,1) 100%);
 }
 
 .movieSliderMovieTitle{

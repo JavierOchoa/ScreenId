@@ -15,7 +15,7 @@ interface Props {
 const TrendingSection: FC<PropsWithChildren<Props>> = ({length, movies, shows, people}) => {
     return(
         <div className={styles.trendingContainer}>
-            <h2>{movies ? 'Trending FilterContent' : shows ? 'Trending TV Shows' : 'Trending People'}</h2>
+            <h2>{movies ? 'Trending Movies' : shows ? 'Trending TV Shows' : 'Trending People'}</h2>
             <div className={styles.trendingSection}>
                 {movies &&
                     movies.results.slice(0, length).map((movie, i)=>{

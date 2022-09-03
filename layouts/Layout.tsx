@@ -1,6 +1,7 @@
 import React, {FC, PropsWithChildren} from 'react';
 import Head from "next/head";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 interface Props {
     title: string,
@@ -32,6 +33,7 @@ export const Layout: FC<PropsWithChildren<Props>> = ({children, title, pageDescr
             <main>
                 {children}
             </main>
+            <Footer/>
         </div>
     );
 }
