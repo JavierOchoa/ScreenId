@@ -1,4 +1,4 @@
-import {FC, Key, PropsWithChildren, useState} from "react";
+import React, {FC, Key, PropsWithChildren, useState} from "react";
 import {TrendingMovieResult, TrendingTvResult} from "../interfaces";
 import MediaCard from "./MediaCard";
 import styles from '../styles/FilterContent.module.css';
@@ -72,8 +72,8 @@ const FilterContent: FC<PropsWithChildren<Props>> = ({trendingMovieData, genres,
         return base;
     }
 
-    const handleGenreSelector = (e: { value: number, label: string }[]) => setGenreSelector(e.map(genre => genre.value));
-    const handlePopularitySelector = (e: Event) => setPopularitySelector(Number((e.target as HTMLTextAreaElement).value));
+    const handleGenreSelector = (e: { value: number, label: string }[]) => setGenreSelector(e.map((genre ) => genre.value));
+    const handlePopularitySelector = (e: React.ChangeEvent<HTMLInputElement>) => setPopularitySelector(Number((e.target.value)));
     const handleSort = (e: { value: string, label: string }) => {
         if (e === null) return setSortSelector('');
         setSortSelector(e.value)
@@ -95,18 +95,21 @@ const FilterContent: FC<PropsWithChildren<Props>> = ({trendingMovieData, genres,
                     <p className={styles.filtersTitle}>Filter Options</p>
                     <div>
                         <p className={styles.filterSubtitle}>Sort Results By</p>
-                        <Select isClearable onChange={handleSort} options={sortOptions}/>
+                        <Select isClearable onChange={(e)=>handleSort(e || {value: '', label: ''})} options={sortOptions}/>
                     </div>
                     <div>
                         <p className={styles.filterSubtitle}>Genres</p>
-                        <Select isMulti isClearable onChange={handleGenreSelector} options={genreOptions}/>
+                        <Select isMulti isClearable onChange={(e)=> {
+                            let genres = e.map((genre ) => genre)
+                            handleGenreSelector(genres)
+                        }} options={genreOptions}/>
                     </div>
                     <div>
                         <p className={styles.filterSubtitle}>User Score</p>
                         <div className={styles.scoreSliderValueContainer}>
                             <input className={styles.rangeSlider} type={'range'} name={'difficulty'}
                                    value={popularitySelector} min={1} max={10} step={0.1}
-                                   onChange={handlePopularitySelector}/>
+                                   onChange={(e)=>handlePopularitySelector(e)}/>
                             <p>{popularitySelector}</p>
                         </div>
                     </div>
