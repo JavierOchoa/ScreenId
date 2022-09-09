@@ -1,5 +1,5 @@
 import {FC, PropsWithChildren} from "react";
-import {ImovieRecommendations, ITVRecommendations} from "../../interfaces/";
+import {ImovieRecommendations, ITVRecommendations} from "../../interfaces";
 import Image from "next/image";
 import Link from "next/link";
 import styles from '../../styles/Recommendations.module.css';

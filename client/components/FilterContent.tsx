@@ -3,7 +3,7 @@ import {TrendingMovieResult, TrendingTvResult} from "../interfaces";
 import MediaCard from "./MediaCard";
 import styles from '../styles/FilterContent.module.css';
 import Select from 'react-select'
-import {MediaGenres, Genre} from "../interfaces/";
+import {MediaGenres, Genre} from "../interfaces";
 import axios from "axios";
 import {movies} from "../slices/trendingMoviesSlice";
 import {useSelector, useDispatch} from 'react-redux'
@@ -62,7 +62,7 @@ const FilterContent: FC<PropsWithChildren<Props>> = ({trendingMovieData, genres,
             trendingTvData && sortSelector === 'tAsc'
                 ? base = copy?.sort((a: { name: string; }, b: { name: string; }) => a.name?.localeCompare(b.name))
                 : sortSelector === 'tDesc'
-                    ? base = copy?.sort((a: { name: string; }, b: { name: string; }) => b.name!.localeCompare(a.name))
+                    ? base = copy?.sort((a: { name: string; }, b: { name: string; }) => b.name?.localeCompare(a.name))
                     : null
         }
         if (genreSelector[0] !== -1) {
