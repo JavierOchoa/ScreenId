@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MediaModule } from './media/media.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { MediaModule } from './media/media.module';
       autoLoadEntities: true,
       synchronize: true
     }),
-    MediaModule
+    MediaModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
