@@ -15,7 +15,7 @@ export class Media {
     @Column('text')
     type: string;
 
-    @ManyToMany(() => User, (user) => user.favorites, {eager: true})
+    @ManyToMany(() => User, (user) => user.favorites)
     users: User[] 
 
     addUser(users: User[]){

@@ -17,9 +17,10 @@ export class MediaController {
     return this.mediaService.addToFavorites(createMediaDto, user);
   }
 
-  @Get()
-  findAll() {
-    return this.mediaService.findAll();
+  @Get('/favorites')
+  @Auth()
+  findAll(@GetUser() user: User) {
+    return this.mediaService.findAll(user);
   }
 
   @Get(':type/:id')

@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, InternalServerErrorException, Logger, 
 import { InjectRepository } from '@nestjs/typeorm';
 import { NotFoundError } from 'rxjs';
 import { User } from '../auth/entities/user.entity';
-import { QueryFailedError, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateMediaDto } from './dto/create-media.dto';
 import { UpdateMediaDto } from './dto/update-media.dto';
 import { Media } from './entities/media.entity';
@@ -12,11 +12,15 @@ import { RemovePayload } from './interfaces/remove-payload.interface';
 export class MediaService {
   private readonly logger = new Logger('MediaService')
 
-  @InjectRepository(Media)
-  private readonly mediaRepository: Repository<Media>
+  constructor(
+    @InjectRepository(Media)
+    private readonly mediaRepository: Repository<Media>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>
+  ){}
+
   async create(createMediaDto: CreateMediaDto) {
     try{
-      // const {id, profilePath, title, type } = createMediaDto;
       const media = this.mediaRepository.create(createMediaDto)
       await this.mediaRepository.save(media)
       return media;
@@ -47,13 +51,10 @@ export class MediaService {
 
   async removeFromFavorites(removePayload: RemovePayload, userToDelete: User){
     const {id, type} = removePayload;
-    console.log(id)
     try{
       let media = await this.findOneByTypeID(+id, type);
-      console.log(media);
       if(!media) throw new NotFoundError(`No media with id: ${id} and type: ${type}`);
-      // TODO: FIX
-      const userList = media.users.filter(user=>user.id !== user.id);
+      const userList = media.users.filter(user=>user.id !== userToDelete.id);
       media.users = userList;
       await this.mediaRepository.save(media)
       return media;
@@ -63,15 +64,20 @@ export class MediaService {
     }
   }
 
-  findAll() {
-    return `This action returns all media`;
+  async findAll(user: User) {
+    try{
+      const userInDB = await this.userRepository.findOne({where: {id: user.id}, relations: {favorites : true}})
+      if(!userInDB) throw new NotFoundError(`No user with ID: ${user.id}`);
+      return userInDB.favorites;
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   async findOneByTypeID(id: number, type: string) {
     let mediaInDB: Media
     try{
-      mediaInDB = await this.mediaRepository.findOneBy({id, type})
-      // if(!mediaInDB) throw new NotFoundError(`No media with id: ${id} and type: ${type}`);
+      mediaInDB = await this.mediaRepository.findOne({where: {id, type}, relations: {users: true}})
       if(!mediaInDB) return;
       return mediaInDB;
     } catch (e) {
