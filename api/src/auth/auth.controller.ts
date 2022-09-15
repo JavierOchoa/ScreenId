@@ -23,10 +23,10 @@ export class AuthController {
     return this.authService.login(loginUserDto);
   }
 
-  @Get()
+  @Get('/user')
   @Auth()
-  findAll(@GetUser() user: User) {
-    return this.authService.findAll();
+  getUser(@GetUser() user: User) {
+    return this.authService.getUser(user);
   }
 
   @Get(':id')

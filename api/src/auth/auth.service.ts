@@ -45,8 +45,12 @@ export class AuthService {
     }
   } 
 
-  findAll() {
-    return `This action returns all auth`;
+  getUser(user: User) {
+    const {fullName, email} = user;
+    return {
+      fullName,
+      email
+    };
   }
 
   findOne(id: number) {

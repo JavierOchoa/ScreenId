@@ -4,7 +4,7 @@ import { CreateMediaDto } from './dto/create-media.dto';
 import { UpdateMediaDto } from './dto/update-media.dto';
 import { Auth } from '../auth/decorators/auth.decorator';
 import { User } from '../auth/entities/user.entity';
-import { GetUser } from 'src/auth/decorators/get-user.decorator';
+import { GetUser } from '../auth/decorators/get-user.decorator';
 import { RemovePayload } from './interfaces/remove-payload.interface';
 
 @Controller('media')

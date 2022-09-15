@@ -9,6 +9,7 @@ import {TrendingMovieData, TrendingTvData, TrendingPersonData} from "../interfac
 import styles from '../styles/Home.module.css';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
  import TrendingSection from "../components/TrendingSection";
+import useAuth from "../utils/useAuth";
 
  interface trendingData {
      trendingMovieData: TrendingMovieData,
@@ -19,7 +20,8 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 const Home: FC<PropsWithChildren<trendingData>> = ({trendingMovieData, trendingTvData, trendingPersonData}) => {
      //TODO: dynamic content in slider
      const [movieInSlider, setMovieInSlider] = useState(0);
-
+     const {isAuthenticated} = useAuth();
+     
      return (
     <Layout title={'Home'} pageDescription={'Discover the latest FilterContent, TV Shows and Artists'}>
       <Carousel
