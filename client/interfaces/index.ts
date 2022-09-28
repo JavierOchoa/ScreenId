@@ -13,3 +13,5 @@ export * from './personMovieCredits';
 export * from './personTvCredits';
 export * from './personCombinedCredits';
 export * from './mediaGenres';
+export * from './userInfo';
+export * from './userFavorites';

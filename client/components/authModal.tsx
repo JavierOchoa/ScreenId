@@ -1,5 +1,5 @@
 import styles from '../styles/authModal.module.css'
-import { FC, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren, useState } from 'react';
 import useAuth from '../utils/useAuth';
 
 interface Props {
@@ -9,16 +9,22 @@ interface Props {
 }
 
 const AuthModal: FC<PropsWithChildren<Props>> = ({show, type, onClose, children}) => {
-    const {login} = useAuth();
+    const {login, signup} = useAuth();
+    const [formType, setFormType] = useState(type);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const form = e.target as HTMLFormElement;
         const formData = new FormData(form);
+        const fullName = formData.get('name') as string;
         const email = formData.get('email') as string;
         const password = formData.get('password') as string;
-        login(email, password);
-        // console.log(email, password);
+        if(formType === 'login'){
+            login(email, password);
+        }
+        if(formType === 'signup'){
+            signup(fullName, email, password);
+        }
     }
     
     if(!show) return null;
@@ -32,7 +38,7 @@ const AuthModal: FC<PropsWithChildren<Props>> = ({show, type, onClose, children}
                 <div className={styles.modalBody}>
                     {(type === 'login' || type === 'signup') &&
                         <form onSubmit={(e)=>handleSubmit(e)}>
-                            {type ==='signup' &&
+                            {formType ==='signup' &&
                                 <div className={styles.formGroup}>
                                     <label htmlFor="name">Name</label>
                                     <input type="text" name="name" id="name" />
@@ -47,12 +53,18 @@ const AuthModal: FC<PropsWithChildren<Props>> = ({show, type, onClose, children}
                                 <label htmlFor="password">Password</label>
                                 <input type="password" name="password" id="password" />
                             </div>
+                            {formType === 'login' &&
+                                <p className={styles.authType} onClick={()=>setFormType('signup')}>Don't have an account yet?</p>
+                            }
+                            {formType === 'signup' &&
+                                <p className={styles.authType} onClick={()=>setFormType('login')}>Already have an account?</p>
+                            }
                             <div className={styles.formGroup}>
-                                <button type="submit">Submit</button>
+                                <button type="submit">{formType === 'login' ? 'Login' : 'Signup'}</button>
                             </div>
                         </form>
                     }
-                    {type === 'content' && children}
+                    {formType === 'content' && children}
                 </div>
                 <div className={styles.modalFooter}>
                     <button onClick={onClose}>Close</button>

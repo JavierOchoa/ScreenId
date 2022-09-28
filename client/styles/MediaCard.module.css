@@ -23,8 +23,32 @@
     border-radius: 0.5rem 0.5rem 0 0;
 }
 
+.coverImage:hover{
+    opacity: 30%;
+    transition-duration: .25s;
+}
+
 .cardImageTitle {
     padding: 0 0 0.5rem;
     border-radius: 0.5rem;
     background-color: #06113C;
 }
+
+.likeButton {
+    display: block;
+    cursor: pointer;
+    filter: hue-rotate(90deg);    
+    /* position: absolute;
+    z-index: -1;
+    margin: 0.5rem; */
+}
+
+/* .trendingCard:hover .likeButton {
+    display: block;
+    position: absolute;
+    fill: red;
+    z-index: 100;
+    margin: 0.5rem;
+    border: none;
+    border-radius: 20%;
+} */

@@ -1,15 +1,21 @@
 import axios from "axios";
-import { sensitiveHeaders } from "http2";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { getCookie, setCookie} from "typescript-cookie";
+import { useSelector, useDispatch } from 'react-redux'
+import { getCookie, setCookie, removeCookie} from "typescript-cookie";
+import { UserFavorites, UserInfo } from "../interfaces";
+import { userInfo, cleanUserInfo } from "../slices/userInfoSlice";
+import { favoriteItems, cleanFavoriteItems} from "../slices/userFavoriteSlice";
+import { RootState } from "../store";
 
 
 export default function useAuth(){
-    const router = useRouter()
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [userCookie, setUserCookie] = useState('')
-    const [user, setUser] = useState({})
+    const user = useSelector((state: RootState) => state.userInfo.value)
+    const favoriteMedia = useSelector((state: RootState) => state.userFavorites.value)
+    const router = useRouter();
+    const dispatch = useDispatch();
 
     useEffect(()=>{
         const theCookie = getCookie('SID');
@@ -19,14 +25,22 @@ export default function useAuth(){
         }
     },[])
 
-    // if(isAuthenticated && Object.keys(user).length === 0){
-    //         axios.get(`${process.env.NEXT_PUBLIC_BACKEND_AUTH}/user`, {
-    //             headers: {Authorization: `Bearer ${userCookie}`} 
-    //         })
-    //         .then(({data})=> setUser(data))
-    //         .catch((e)=>console.log(e));
-    
-    // }
+    useEffect(()=>{
+        if(isAuthenticated && !user.fullName){
+            // console.log('isAuthenticated', isAuthenticated);
+            
+            getUser(userCookie)
+        }
+    }, [isAuthenticated])
+
+    // useEffect(()=>{
+    //     if(isAuthenticated && router.pathname==='/profile'){
+    //         // getFavorites(userCookie);
+    //         console.log(router.pathname);
+            
+    //     }
+        
+    // },[])
 
     async function login(email: string, password:string){
         try{
@@ -39,5 +53,45 @@ export default function useAuth(){
         }
     }
 
-    return {login, isAuthenticated, user}
+    async function signup(fullName: string, email: string, password: string){
+        try {
+            const {data} = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_AUTH}/register`, {fullName, email, password})
+            if(!data.token) return data;
+            setCookie('SID', data.token, {sameSite: 'strict', secure: true})
+            router.reload()
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    function logout(){
+        removeCookie('SID');
+        router.reload();
+    }
+
+    async function getUser(cookie: string){
+        try{
+            const {data} = await axios.get<UserInfo>(`${process.env.NEXT_PUBLIC_BACKEND_AUTH}/user`, {
+                headers: {Authorization: `Bearer ${cookie}`}
+            })
+            dispatch(userInfo(data))
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    async function getFavorites(cookie:string) {
+        try{
+            const {data} = await axios.get<UserFavorites[]>(`${process.env.NEXT_PUBLIC_BACKEND_MEDIA}/favorites`, {
+                headers: {Authorization: `Bearer ${cookie}`}
+            })
+            // dispatch(favoriteItems(data))
+            console.log('data');
+            
+        } catch (e) {
+            console.log(e)
+        }
+        
+    }
+    return {signup, login, logout, isAuthenticated, user, favoriteMedia}
 }

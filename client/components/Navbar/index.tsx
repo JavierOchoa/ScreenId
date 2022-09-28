@@ -5,10 +5,10 @@ import useAuth from '../../utils/useAuth';
 import AuthModal from '../authModal';
 
 function Index() {
-    const {login} = useAuth();
+    const {logout} = useAuth();
     const [showModal, setShowModal] = useState(false);
     const {isAuthenticated, user} = useAuth();
-    console.log(user);
+    // console.log(isAuthenticated, user);
     return (
         <div className={styles.navbar}>
             <p className={styles.logo}>Screen<span>Id</span></p>
@@ -19,9 +19,13 @@ function Index() {
             </ul>
             {!isAuthenticated && 
             <div className={styles.auth}>
-                {/* <Link href={'/login'}><a>Login</a></Link> */}
-                <button onClick={()=>setShowModal(true)}>Login</button>
-                <Link href={'/signup'}><a>SignUp</a></Link>
+                <button className={styles.authButton} onClick={()=>setShowModal(true)}>Login / Signup</button>
+            </div>
+            }
+            {isAuthenticated && 
+            <div className={styles.auth}>
+                <Link href={'/profile'}><a>{user?.fullName}</a></Link>
+                <button className={styles.authButton} onClick={()=>logout()}>Logout</button>
             </div>
             }
 
