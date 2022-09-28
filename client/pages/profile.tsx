@@ -1,5 +1,6 @@
 import { GetServerSideProps } from "next";
 import { Layout } from "../layouts";
+import UserFavorites from "../components/UserFavorites";
 
 const Profile = () => {
     return(
@@ -12,7 +13,7 @@ const Profile = () => {
                     <p>Deactivate Account</p>
                 </div>
                 <div>
-                    {/* TODO: SETTING BOX with switch*/}
+                    <UserFavorites/>
                 </div>
             </div>
         </Layout>

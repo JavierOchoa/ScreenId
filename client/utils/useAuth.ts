@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import { getCookie, setCookie, removeCookie} from "typescript-cookie";
-import { UserFavorites, UserInfo } from "../interfaces";
+import { IUserFavorites, UserInfo } from "../interfaces";
 import { userInfo, cleanUserInfo } from "../slices/userInfoSlice";
 import { favoriteItems, cleanFavoriteItems} from "../slices/userFavoriteSlice";
 import { RootState } from "../store";
@@ -27,20 +27,9 @@ export default function useAuth(){
 
     useEffect(()=>{
         if(isAuthenticated && !user.fullName){
-            // console.log('isAuthenticated', isAuthenticated);
-            
             getUser(userCookie)
         }
     }, [isAuthenticated])
-
-    // useEffect(()=>{
-    //     if(isAuthenticated && router.pathname==='/profile'){
-    //         // getFavorites(userCookie);
-    //         console.log(router.pathname);
-            
-    //     }
-        
-    // },[])
 
     async function login(email: string, password:string){
         try{
@@ -80,18 +69,18 @@ export default function useAuth(){
         }
     }
 
-    async function getFavorites(cookie:string) {
+    async function getFavorites() {
         try{
-            const {data} = await axios.get<UserFavorites[]>(`${process.env.NEXT_PUBLIC_BACKEND_MEDIA}/favorites`, {
-                headers: {Authorization: `Bearer ${cookie}`}
+            const {data} = await axios.get<IUserFavorites[]>(`${process.env.NEXT_PUBLIC_BACKEND_MEDIA}/favorites`, {
+                headers: {Authorization: `Bearer ${userCookie}`}
             })
-            // dispatch(favoriteItems(data))
-            console.log('data');
+
+            return data
             
         } catch (e) {
             console.log(e)
         }
         
     }
-    return {signup, login, logout, isAuthenticated, user, favoriteMedia}
+    return {signup, login, logout, isAuthenticated, user, getFavorites}
 }
