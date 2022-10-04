@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import { getCookie, setCookie, removeCookie} from "typescript-cookie";
-import { IUserFavorites, UserInfo } from "../interfaces";
+import { IUserFavorite, UserInfo } from "../interfaces";
 import { userInfo, cleanUserInfo } from "../slices/userInfoSlice";
 import { favoriteItems, cleanFavoriteItems} from "../slices/userFavoriteSlice";
 import { RootState } from "../store";
@@ -71,7 +71,7 @@ export default function useAuth(){
 
     async function getFavorites() {
         try{
-            const {data} = await axios.get<IUserFavorites[]>(`${process.env.NEXT_PUBLIC_BACKEND_MEDIA}/favorites`, {
+            const {data} = await axios.get<IUserFavorite[]>(`${process.env.NEXT_PUBLIC_BACKEND_MEDIA}/favorites`, {
                 headers: {Authorization: `Bearer ${userCookie}`}
             })
 
@@ -82,5 +82,5 @@ export default function useAuth(){
         }
         
     }
-    return {signup, login, logout, isAuthenticated, user, getFavorites}
+    return {signup, login, logout, isAuthenticated, user, getFavorites, userCookie}
 }

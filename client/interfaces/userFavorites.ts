@@ -1,4 +1,4 @@
-export interface IUserFavorites {
+export interface IUserFavorite {
     id:          number;
     profilePath: string;
     title:       string;

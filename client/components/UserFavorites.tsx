@@ -4,11 +4,12 @@ import { useEffect, PropsWithChildren, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { favoriteItems, cleanFavoriteItems } from '../slices/userFavoriteSlice';
 import { RootState } from "../store";
-import { IUserFavorites } from "../interfaces";
+import { IUserFavorite } from "../interfaces";
 import useAuth from "../utils/useAuth";
+import MediaCard from "./MediaCard";
 
 interface Props {
-    favoritesData?: IUserFavorites[]
+    favoritesData?: IUserFavorite[]
 }
 
 const UserFavorites: FC<PropsWithChildren<Props>> = ({favoritesData}) => {
@@ -27,10 +28,20 @@ const UserFavorites: FC<PropsWithChildren<Props>> = ({favoritesData}) => {
             dispatch(cleanFavoriteItems())
         }
     },[isAuthenticated])
+    console.log(favoriteMedia);
     
     return (
         <div>
-            
+            {/* <div> */}
+                {favoriteMedia.map((media)=> {
+                    return (
+                        <div>
+                            <p>{media.title}</p>
+                        </div>
+                    )
+                })
+                }
+            {/* </div> */}
         </div>
     )
 }

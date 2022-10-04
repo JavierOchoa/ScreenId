@@ -35,15 +35,14 @@
 }
 
 .likeButton {
-    display: block;
+    display: none;
     cursor: pointer;
-    filter: hue-rotate(90deg);    
-    /* position: absolute;
-    z-index: -1;
-    margin: 0.5rem; */
+    filter: hue-rotate(90deg);
+    background-color: white;
+    padding: 0.2rem;
 }
 
-/* .trendingCard:hover .likeButton {
+.trendingCard:hover .likeButton {
     display: block;
     position: absolute;
     fill: red;
@@ -51,4 +50,4 @@
     margin: 0.5rem;
     border: none;
     border-radius: 20%;
-} */
+}

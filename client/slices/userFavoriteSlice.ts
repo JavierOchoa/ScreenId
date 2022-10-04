@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IUserFavorites } from "../interfaces";
+import { IUserFavorite } from "../interfaces";
 
 interface UserFavoriteMedia {
-    value: IUserFavorites[]
+    value: IUserFavorite[]
 }
 
 const initialState: UserFavoriteMedia = {
@@ -13,7 +13,7 @@ export const favoriteMediaSlice = createSlice ({
     name: 'favoriteMedia',
     initialState,
     reducers: {
-        favoriteItems: (state, action: PayloadAction<IUserFavorites[]>) => {
+        favoriteItems: (state, action: PayloadAction<IUserFavorite[]>) => {
             state.value.push(...action.payload)
         },
         cleanFavoriteItems: (state) => {
