@@ -1,0 +1,19 @@
+.favoritesContainer {
+    background-color: lavender;
+    border-radius: 2rem;
+    padding: 1rem 2rem;
+    box-shadow: inset 0 0 3px #000000;
+}
+
+.favoriteItem {
+    display: flex;
+}
+
+.favoriteItem a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.favoriteTitle {
+    padding: 0 1rem;
+}

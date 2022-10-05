@@ -7,6 +7,11 @@ import { RootState } from "../store";
 import { IUserFavorite } from "../interfaces";
 import useAuth from "../utils/useAuth";
 import MediaCard from "./MediaCard";
+import styles from '../styles/UserFavorites.module.css';
+import Image from "next/image";
+import movie from '../public/movie.svg';
+import tv from '../public/tv.svg';
+import Link from "next/link";
 
 interface Props {
     favoritesData?: IUserFavorite[]
@@ -31,17 +36,20 @@ const UserFavorites: FC<PropsWithChildren<Props>> = ({favoritesData}) => {
     console.log(favoriteMedia);
     
     return (
-        <div>
-            {/* <div> */}
-                {favoriteMedia.map((media)=> {
+        <div className={styles.favoritesContainer}>
+                {favoriteMedia.map((media, i)=> {
                     return (
-                        <div>
-                            <p>{media.title}</p>
+                        <div className={styles.favoriteItem} style={i===0 ? {}:{borderTop: '1px solid black'}}>
+                            <Image src={media.type==='movie'? movie : tv} alt={media.type}/>
+                            <Link href={`${media.type}/${media.id}`}>
+                                <a>
+                                    <p className={styles.favoriteTitle}>{media.title}</p>
+                                </a>
+                            </Link>
                         </div>
                     )
                 })
                 }
-            {/* </div> */}
         </div>
     )
 }
