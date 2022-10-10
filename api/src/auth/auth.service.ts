@@ -3,19 +3,21 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
-import { JwtPayload } from './interfaces';
+import { JwtPayload, UpdateType } from './interfaces';
 import { User } from './entities/user.entity';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { LoginUserDto } from './dto';
 import { AuthGuard } from '@nestjs/passport';
+import { PasswordUpdateDto } from './dto/password-update.dto';
 
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly updateType: UpdateType
   ){}
   async create(createAuthDto: CreateAuthDto) {
     const {password, ...userData} = createAuthDto
@@ -51,6 +53,25 @@ export class AuthService {
       fullName,
       email
     };
+  }
+
+  async updatePassword(user:User, updatePasswordDto: PasswordUpdateDto, type: string){
+    const { email } = user;
+    const userOnDB = await this.userRepository.findOne({
+      where: { email },
+      select: { email: true, password: true, id: true },
+    });
+    if (!userOnDB) throw new UnauthorizedException('Credentials not valid (email)');
+    if(type === 'password'){
+      const { currentPassword, newPassword } = updatePasswordDto;
+      if(!bcrypt.compareSync(currentPassword, userOnDB.password)) throw new UnauthorizedException('Credentials not valid (password)');
+      user.password = bcrypt.hashSync(newPassword, 10)
+      await this.userRepository.save(user);
+      return {
+        successful: true,
+        message: 'Password has been updated'
+      }      
+    }
   }
 
   findOne(id: number) {

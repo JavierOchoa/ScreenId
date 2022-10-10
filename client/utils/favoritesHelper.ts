@@ -2,8 +2,6 @@ import axios from 'axios';
 import { IUserFavorite } from '../interfaces';
 import useAuth from './useAuth';
 
-//TODO: move getFavorites from useAuth
-
 export default function favoritesHelper() {
     const {userCookie} = useAuth();
 
@@ -19,6 +17,20 @@ export default function favoritesHelper() {
         )
         return data;
     }
+
+    async function getFavorites() {
+        try{
+            const {data} = await axios.get<IUserFavorite[]>(`${process.env.NEXT_PUBLIC_BACKEND_MEDIA}/favorites`, {
+                headers: {Authorization: `Bearer ${userCookie}`}
+            })
+
+            return data
+            
+        } catch (e) {
+            console.log(e)
+        }
+        
+    }
     
-    return {addToFavorites}
+    return {addToFavorites, getFavorites}
 }

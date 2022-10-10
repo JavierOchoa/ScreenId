@@ -5,9 +5,10 @@ import { Auth } from './decorators/auth.decorator';
 import { GetUser } from './decorators/get-user.decorator';
 import { LoginUserDto } from './dto';
 import { CreateAuthDto } from './dto/create-auth.dto';
+import { PasswordUpdateDto } from './dto/password-update.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { User } from './entities/user.entity';
-import { ValidRoles } from './interfaces';
+import { UpdateType, ValidRoles } from './interfaces';
 
 @Controller('auth')
 export class AuthController {
@@ -27,6 +28,12 @@ export class AuthController {
   @Auth()
   getUser(@GetUser() user: User) {
     return this.authService.getUser(user);
+  }
+
+  @Post('/update')
+  @Auth()
+  updatePassword(@GetUser() user: User, @Body () updatePasswordDto: PasswordUpdateDto, @Body () type:string){
+    return this.authService.updatePassword(user, updatePasswordDto, type)
   }
 
   @Get(':id')

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, FormEvent } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import { getCookie, setCookie, removeCookie} from "typescript-cookie";
 import { IUserFavorite, UserInfo } from "../interfaces";
@@ -69,18 +69,9 @@ export default function useAuth(){
         }
     }
 
-    async function getFavorites() {
-        try{
-            const {data} = await axios.get<IUserFavorite[]>(`${process.env.NEXT_PUBLIC_BACKEND_MEDIA}/favorites`, {
-                headers: {Authorization: `Bearer ${userCookie}`}
-            })
-
-            return data
-            
-        } catch (e) {
-            console.log(e)
-        }
-        
+    async function updatePassword(currentPassword: string, newPassword: string){
+        // const { data } = axios.post()
     }
-    return {signup, login, logout, isAuthenticated, user, getFavorites, userCookie}
+
+    return {signup, login, logout, isAuthenticated, user, userCookie}
 }

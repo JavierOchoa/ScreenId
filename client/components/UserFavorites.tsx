@@ -12,6 +12,7 @@ import Image from "next/image";
 import movie from '../public/movie.svg';
 import tv from '../public/tv.svg';
 import Link from "next/link";
+import favoritesHelper from "../utils/favoritesHelper";
 
 interface Props {
     favoritesData?: IUserFavorite[]
@@ -19,7 +20,8 @@ interface Props {
 
 const UserFavorites: FC<PropsWithChildren<Props>> = ({favoritesData}) => {
     const favoriteMedia = useSelector((state: RootState) => state.userFavorites.value)
-    const {getFavorites, isAuthenticated} = useAuth();
+    const {isAuthenticated} = useAuth();
+    const {getFavorites} = favoritesHelper();
     const dispatch = useDispatch();
     useEffect(()=>{
         console.log(isAuthenticated);
