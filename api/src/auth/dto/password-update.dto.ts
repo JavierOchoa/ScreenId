@@ -23,4 +23,7 @@ export class PasswordUpdateDto {
         'The password must have a Uppercase, lowercase letter and a number',
     })
     newPassword: string;
+    
+    @IsString()
+    type: string;
 }

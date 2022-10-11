@@ -17,7 +17,7 @@ export class AuthService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
-    private readonly updateType: UpdateType
+    // private readonly updateType: UpdateType
   ){}
   async create(createAuthDto: CreateAuthDto) {
     const {password, ...userData} = createAuthDto
@@ -55,14 +55,14 @@ export class AuthService {
     };
   }
 
-  async updatePassword(user:User, updatePasswordDto: PasswordUpdateDto, type: string){
+  async updatePassword(user:User, updatePasswordDto: PasswordUpdateDto){
     const { email } = user;
     const userOnDB = await this.userRepository.findOne({
       where: { email },
       select: { email: true, password: true, id: true },
     });
     if (!userOnDB) throw new UnauthorizedException('Credentials not valid (email)');
-    if(type === 'password'){
+    // if(type === 'password'){
       const { currentPassword, newPassword } = updatePasswordDto;
       if(!bcrypt.compareSync(currentPassword, userOnDB.password)) throw new UnauthorizedException('Credentials not valid (password)');
       user.password = bcrypt.hashSync(newPassword, 10)
@@ -71,7 +71,7 @@ export class AuthService {
         successful: true,
         message: 'Password has been updated'
       }      
-    }
+    // }
   }
 
   findOne(id: number) {

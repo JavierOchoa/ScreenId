@@ -15,3 +15,4 @@ export * from './personCombinedCredits';
 export * from './mediaGenres';
 export * from './userInfo';
 export * from './userFavorites';
+export * from './updatedPasswordResponse';

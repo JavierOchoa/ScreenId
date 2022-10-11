@@ -32,8 +32,8 @@ export class AuthController {
 
   @Post('/update')
   @Auth()
-  updatePassword(@GetUser() user: User, @Body () updatePasswordDto: PasswordUpdateDto, @Body () type:string){
-    return this.authService.updatePassword(user, updatePasswordDto, type)
+  updatePassword(@GetUser() user: User, @Body () updatePasswordDto: PasswordUpdateDto){
+    return this.authService.updatePassword(user, updatePasswordDto)
   }
 
   @Get(':id')

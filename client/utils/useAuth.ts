@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState, FormEvent } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import { getCookie, setCookie, removeCookie} from "typescript-cookie";
-import { IUserFavorite, UserInfo } from "../interfaces";
+import { IUserFavorite, UpdatedPasswordResponse, UserInfo } from "../interfaces";
 import { userInfo, cleanUserInfo } from "../slices/userInfoSlice";
 import { favoriteItems, cleanFavoriteItems} from "../slices/userFavoriteSlice";
 import { RootState } from "../store";
@@ -70,8 +70,20 @@ export default function useAuth(){
     }
 
     async function updatePassword(currentPassword: string, newPassword: string){
-        // const { data } = axios.post()
+        try{
+            const { data } = await axios.post<UpdatedPasswordResponse>(`${process.env.NEXT_PUBLIC_BACKEND_AUTH}/update`, {
+                currentPassword,
+                newPassword,
+                type: 'password',
+            }, {
+                headers: {Authorization: `Bearer ${userCookie}`}
+            })
+            return data;
+        } catch (e) {
+            console.log(e)
+        }
+
     }
 
-    return {signup, login, logout, isAuthenticated, user, userCookie}
+    return {signup, login, logout, isAuthenticated, user, userCookie, updatePassword}
 }
