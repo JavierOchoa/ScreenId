@@ -1,0 +1,6 @@
+.updateEmailButton {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #06113c;
+    font-size: small;
+}

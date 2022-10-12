@@ -85,5 +85,24 @@ export default function useAuth(){
 
     }
 
-    return {signup, login, logout, isAuthenticated, user, userCookie, updatePassword}
+    async function updateEmail(currentPassword: string, newEmail: string){
+        try{
+            const { data } = await axios.post<UpdatedPasswordResponse>(`${process.env.NEXT_PUBLIC_BACKEND_AUTH}/update`, {
+                currentPassword,
+                newEmail,
+                type: 'email',
+            }, {
+                headers: {Authorization: `Bearer ${userCookie}`}
+            })
+            if(!data.successful) return data;
+            await getUser(userCookie);
+            return data;
+
+        } catch (e) {
+            console.log(e)
+        }
+
+    }
+
+    return {signup, login, logout, isAuthenticated, user, userCookie, updatePassword, updateEmail}
 }

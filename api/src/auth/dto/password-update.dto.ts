@@ -1,4 +1,6 @@
 import {
+    IsEmail,
+    IsOptional,
     IsString,
     Matches,
     MaxLength,
@@ -16,6 +18,7 @@ export class PasswordUpdateDto {
     currentPassword: string;
   
     @IsString()
+    @IsOptional()
     @MinLength(6)
     @MaxLength(50)
     @Matches(/(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
@@ -24,6 +27,11 @@ export class PasswordUpdateDto {
     })
     newPassword: string;
     
+    @IsString()
+    @IsOptional()
+    @IsEmail()
+    newEmail: string;
+
     @IsString()
     type: string;
 }

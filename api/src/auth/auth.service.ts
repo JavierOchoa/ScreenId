@@ -57,21 +57,31 @@ export class AuthService {
 
   async updatePassword(user:User, updatePasswordDto: PasswordUpdateDto){
     const { email } = user;
+    const { currentPassword, newPassword, newEmail, type } = updatePasswordDto;
     const userOnDB = await this.userRepository.findOne({
       where: { email },
       select: { email: true, password: true, id: true },
     });
     if (!userOnDB) throw new UnauthorizedException('Credentials not valid (email)');
-    // if(type === 'password'){
-      const { currentPassword, newPassword } = updatePasswordDto;
-      if(!bcrypt.compareSync(currentPassword, userOnDB.password)) throw new UnauthorizedException('Credentials not valid (password)');
-      user.password = bcrypt.hashSync(newPassword, 10)
-      await this.userRepository.save(user);
+    if(!bcrypt.compareSync(currentPassword, userOnDB.password)) throw new UnauthorizedException('Credentials not valid (password)');
+    if (type === 'email') {
+      userOnDB.email = newEmail;
+      await this.userRepository.save(userOnDB);
+      return {
+        // token: this.getJwtToken({id: user.id}),
+        successful: true,
+        message: 'Email has been updated'
+      }   
+    }
+    if(type === 'password'){
+      // const { currentPassword, newPassword } = updatePasswordDto;
+      userOnDB.password = bcrypt.hashSync(newPassword, 10)
+      await this.userRepository.save(userOnDB);
       return {
         successful: true,
         message: 'Password has been updated'
       }      
-    // }
+    }
   }
 
   findOne(id: number) {
