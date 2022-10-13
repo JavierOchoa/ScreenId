@@ -33,24 +33,24 @@ const AuthModal: FC<PropsWithChildren<Props>> = ({show, type, onClose, children}
         <div className={styles.modal} onClick={onClose}>
             <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.modalHeader}>
-                    <h4 className={styles.modalTitle}>Modal Title</h4>
+                    <h4 className={styles.modalTitle}>{formType}</h4>
                 </div>
                 <div className={styles.modalBody}>
                     {(type === 'login' || type === 'signup') &&
                         <form onSubmit={(e)=>handleSubmit(e)}>
                             {formType ==='signup' &&
                                 <div className={styles.formGroup}>
-                                    <label htmlFor="name">Name</label>
+                                    <label htmlFor="name">Name: </label>
                                     <input type="text" name="name" id="name" />
                                 </div>
                             }
 
                             <div className={styles.formGroup}>
-                                <label htmlFor="email">Email</label>
+                                <label htmlFor="email">Email: </label>
                                 <input type="email" name="email" id="email" />
                             </div>
                             <div className={styles.formGroup}>
-                                <label htmlFor="password">Password</label>
+                                <label htmlFor="password">Password: </label>
                                 <input type="password" name="password" id="password" />
                             </div>
                             {formType === 'login' &&
@@ -60,14 +60,14 @@ const AuthModal: FC<PropsWithChildren<Props>> = ({show, type, onClose, children}
                                 <p className={styles.authType} onClick={()=>setFormType('login')}>Already have an account?</p>
                             }
                             <div className={styles.formGroup}>
-                                <button type="submit">{formType === 'login' ? 'Login' : 'Signup'}</button>
+                                <button className={styles.button} type="submit">{formType === 'login' ? 'Login' : 'Signup'}</button>
                             </div>
                         </form>
                     }
                     {formType === 'content' && children}
                 </div>
                 <div className={styles.modalFooter}>
-                    <button onClick={onClose}>Close</button>
+                    <button className={styles.button} onClick={onClose}>Close</button>
                 </div>
             </div>
         </div>

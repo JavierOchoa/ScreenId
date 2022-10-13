@@ -4,3 +4,38 @@
     color: #06113c;
     font-size: small;
 }
+
+.confirmationMessage {
+    color: green;
+    font-size: larger;
+}
+
+.formLabel {
+    font-size: xx-large;
+}
+
+.formSecondLabel {
+    font-size: large;
+}
+
+.form {
+    margin: 2rem 0;
+}
+
+.submitButtom {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    font-weight: bold;
+    border: none;
+    background-color: #06113c;
+    color: white;
+    border-radius: 0.2rem;
+    cursor: pointer;
+}
+
+.input {
+    margin-bottom: 0.5rem;
+    padding: 0.3rem;
+    font-size: medium;
+    border-radius: 0.3rem;
+}

@@ -31,6 +31,8 @@
 
 .modalTitle{
     margin: 0;
+    text-transform: capitalize;
+    font-size: xx-large;
 }
 
 .modalBody {
@@ -42,4 +44,24 @@
 .authType {
     text-decoration: underline;
     cursor: pointer;
+}
+
+.formGroup {
+    margin: 0.5rem 0;
+}
+
+.button {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    font-weight: bold;
+    border: none;
+    background-color: #06113c;
+    color: white;
+    border-radius: 0.2rem;
+    cursor: pointer;
+}
+
+.modalFooter {
+    display: flex;
+    justify-content: center;
 }

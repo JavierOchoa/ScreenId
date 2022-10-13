@@ -38,6 +38,7 @@ const Account = () => {
         if(response?.successful) {
             setPassowordUpdated(true)
             setConfirmationMessage(response.message)
+            setDisabledPasswordForm(true)
         } else {
             console.log(response);
         }
@@ -45,27 +46,25 @@ const Account = () => {
 
     return (
         <div>
-            <h2>Account Details</h2>
-
-            {(passwordUpdated || emailUpdated) && <p>{confirmationMessage}</p>}
-            <form onSubmit={(e: SyntheticEvent)=>handleUpdateEmailForm(e)}>
-                <label>Email:</label><br/>
-                <input name={"currentEmail"} id={"currentEmail"} value={user.email} type={"email"} disabled/> <a className={styles.updateEmailButton} onClick={() => setDisabledEmailForm(!disabledEmailForm)}>{disabledEmailForm ? 'Update?' : 'Cancel'}</a><br/>
+            {(passwordUpdated || emailUpdated) && <p className={styles.confirmationMessage}>{confirmationMessage}!</p>}
+            <form onSubmit={(e: SyntheticEvent)=>handleUpdateEmailForm(e)} className={styles.form}>
+                <label className={styles.formLabel}>{disabledEmailForm ? 'Email: ' : 'Current Email: '}</label> <a className={styles.updateEmailButton} onClick={() => setDisabledEmailForm(!disabledEmailForm)}>{disabledEmailForm ? 'Update?' : 'Cancel'}</a><br/>
+                <input name={"currentEmail"} id={"currentEmail"} value={user.email} type={"email"} disabled className={styles.input}/><br/>
                 {!disabledEmailForm && <>
-                    <label>New Email:</label><br/>
-                    <input name={"newEmail"} id={"newEmail"} type={"email"}/><br/>
-                    <label>Current Password:</label><br/>
-                    <input name={"currentPassword"} id={"currentPassword"} type={"password"}/><br/>
-                    <input type="submit" value={"Change Email"}/>
+                    <label className={styles.formSecondLabel}>New Email:</label><br/>
+                    <input name={"newEmail"} id={"newEmail"} type={"email"} className={styles.input}/><br/>
+                    <label className={styles.formSecondLabel}>Current Password:</label><br/>
+                    <input name={"currentPassword"} id={"currentPassword"} type={"password"} className={styles.input}/><br/>
+                    <input type="submit" value={"Change Email"} className={styles.submitButtom}/>
                 </>}
             </form>
             <form onSubmit={(e: SyntheticEvent)=>handleUpdatePasswordForm(e)}>
-                <label>{disabledPasswordForm ? 'Password: ' : 'Current Password: '}</label><a className={styles.updateEmailButton} onClick={() => setDisabledPasswordForm(!disabledPasswordForm)}>{disabledPasswordForm ? 'Update?' : 'Cancel'}</a><br/>
+                <label className={styles.formLabel}>{disabledPasswordForm ? 'Password: ' : 'Current Password: '}</label><a className={styles.updateEmailButton} onClick={() => setDisabledPasswordForm(!disabledPasswordForm)}>{disabledPasswordForm ? 'Update?' : 'Cancel'}</a><br/>
                 {!disabledPasswordForm && <>
-                    <input name={"currentPassword"} id={"currentPassword"} type={"password"}/><br/>
-                    <label>New Password:</label><br/>
-                    <input name={"newPassword"} id={"newPassword"} type={"password"}/><br/>
-                    <input type="submit" value={"Change Password"}/>
+                    <input name={"currentPassword"} id={"currentPassword"} type={"password"} className={styles.input}/><br/>
+                    <label className={styles.formSecondLabel}>New Password:</label><br/>
+                    <input name={"newPassword"} id={"newPassword"} type={"password"} className={styles.input}/><br/>
+                    <input type="submit" value={"Change Password"} className={styles.submitButtom}/>
                 </>
                 }
 

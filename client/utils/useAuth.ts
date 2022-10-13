@@ -11,6 +11,7 @@ import { RootState } from "../store";
 
 export default function useAuth(){
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [userCookie, setUserCookie] = useState('')
     const user = useSelector((state: RootState) => state.userInfo.value)
     const favoriteMedia = useSelector((state: RootState) => state.userFavorites.value)
@@ -20,9 +21,11 @@ export default function useAuth(){
     useEffect(()=>{
         const theCookie = getCookie('SID');
         if(theCookie) {
+            setIsLoading(false);
             setIsAuthenticated(true);
             setUserCookie(theCookie);
         }
+        setIsLoading(false)
     },[])
 
     useEffect(()=>{
@@ -104,5 +107,5 @@ export default function useAuth(){
 
     }
 
-    return {signup, login, logout, isAuthenticated, user, userCookie, updatePassword, updateEmail}
+    return {signup, login, logout, isAuthenticated, user, userCookie, updatePassword, updateEmail, isLoading}
 }
