@@ -2,11 +2,12 @@
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
-    /*width: 80vw;*/
+    padding-bottom: 0.8rem;
 }
 .recommendationsCard {
     flex: 0 0 auto;
     height: 210px;
+    width: 280px;
     margin: 0 0.5rem;
     border-radius: 1rem;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.5);

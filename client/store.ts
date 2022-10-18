@@ -3,6 +3,7 @@ import trendingMoviesReducer from './slices/trendingMoviesSlice';
 import trendingShowsReducer from './slices/trendingShowsSlice';
 import userInfoReducer from './slices/userInfoSlice';
 import userFavoriteReducer from './slices/userFavoriteSlice';
+import mediaCommentReducer from "./slices/commentSlice";
 
 export const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
         trendingShows: trendingShowsReducer,
         userInfo: userInfoReducer,
         userFavorites: userFavoriteReducer,
+        mediaComments: mediaCommentReducer,
     },
 })
 

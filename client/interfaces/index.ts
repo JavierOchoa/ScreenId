@@ -16,3 +16,4 @@ export * from './mediaGenres';
 export * from './userInfo';
 export * from './userFavorites';
 export * from './updatedPasswordResponse';
+export * from './comment';
