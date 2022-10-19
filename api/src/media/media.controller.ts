@@ -6,6 +6,7 @@ import { Auth } from '../auth/decorators/auth.decorator';
 import { User } from '../auth/entities/user.entity';
 import { GetUser } from '../auth/decorators/get-user.decorator';
 import { RemovePayload } from './interfaces/remove-payload.interface';
+import { CreateCommentDto } from './dto/create-comment.dto';
 
 @Controller('media')
 export class MediaController {
@@ -37,5 +38,11 @@ export class MediaController {
   @Auth()
   remove(@Body() removePayload: RemovePayload , @GetUser() user: User) {
     return this.mediaService.removeFromFavorites(removePayload, user);
+  }
+
+  @Post(':type/:id/comments')
+  @Auth()
+  createComment(@Body() createCommentDto: CreateCommentDto, @GetUser() user: User) {
+    return this.mediaService.addComment(createCommentDto, user);
   }
 }

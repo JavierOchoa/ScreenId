@@ -7,6 +7,8 @@ import { CreateMediaDto } from './dto/create-media.dto';
 import { UpdateMediaDto } from './dto/update-media.dto';
 import { Media } from './entities/media.entity';
 import { RemovePayload } from './interfaces/remove-payload.interface';
+import { Comment } from './entities/comment.entity';
+import { CreateCommentDto } from './dto/create-comment.dto';
 
 @Injectable()
 export class MediaService {
@@ -16,7 +18,9 @@ export class MediaService {
     @InjectRepository(Media)
     private readonly mediaRepository: Repository<Media>,
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>
+    private readonly userRepository: Repository<User>,
+    @InjectRepository(Comment)
+    private readonly commentRepository: Repository<Comment>,
   ){}
 
   async create(createMediaDto: CreateMediaDto) {
@@ -82,6 +86,38 @@ export class MediaService {
       return mediaInDB;
     } catch (e) {
       this.handleDBExceptions(e)
+    }
+  }
+
+  async createComment(createCommentDto: CreateCommentDto){
+    try {
+      const comment = this.commentRepository.create(createCommentDto);
+      await this.commentRepository.save(comment);
+      return comment;
+    } catch (e) {
+      this.handleDBExceptions(e)
+    }
+  }
+
+  async findOneCommentByTypeID(mediaType: string, mediaId: string) {
+    let commentInDB: Comment;
+    try {
+      commentInDB = await this.commentRepository.findOne({where: {mediaType, mediaId}, relations: {user: true}})
+      if(!commentInDB) return;
+      return commentInDB;
+    } catch (error) {
+      this.handleDBExceptions(error);
+    }
+  }
+
+  async addComment(createCommentDto: CreateCommentDto, user: User) {
+    try {
+      const commentOnDB = await this.createComment(createCommentDto);
+      commentOnDB.user = user;
+      await this.commentRepository.save(commentOnDB);
+      return commentOnDB;
+    } catch (error) {
+      this.handleDBExceptions(error)
     }
   }
 

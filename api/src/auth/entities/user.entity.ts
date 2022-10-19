@@ -1,5 +1,6 @@
 import { Media } from "../../media/entities/media.entity";
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Comment } from "../../media/entities/comment.entity";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'user' })
 export class User {
@@ -24,4 +25,7 @@ export class User {
     @ManyToMany(() => Media, (media) => media.users)
     @JoinTable()
     favorites: Media[]
+
+    @OneToMany(() => Comment, (comment) => comment.user)
+    comments: Comment[]
 }

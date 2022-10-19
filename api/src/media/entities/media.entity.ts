@@ -1,5 +1,6 @@
 import { User } from "../../auth/entities/user.entity";
-import { Column, Entity, ManyToMany, PrimaryColumn } from "typeorm";
+import { Comment } from "./comment.entity";
+import { Column, Entity, ManyToMany, OneToMany, PrimaryColumn } from "typeorm";
 
 @Entity({ name: 'media'})
 export class Media {
@@ -17,6 +18,9 @@ export class Media {
 
     @ManyToMany(() => User, (user) => user.favorites)
     users: User[] 
+
+    // @OneToMany(() => Comment, (comment) => comment.media)
+    // comments: Comment[]
 
     addUser(users: User[]){
         console.log(this.users)
