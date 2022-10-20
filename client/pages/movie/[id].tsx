@@ -17,12 +17,12 @@ interface Props {
     movieVideos: MovieVideos;
     movieRecommendations: ImovieRecommendations;
     movieExternals: ExternalLinks;
-    mockComments: Comment[];
+    comments: Comment[];
 }
 
-const MovieExtended: FC<PropsWithChildren<Props>> = ({movieInfo, movieCast, movieVideos, movieRecommendations, movieExternals, mockComments}) => {
+const MovieExtended: FC<PropsWithChildren<Props>> = ({movieInfo, movieCast, movieVideos, movieRecommendations, movieExternals, comments}) => {
     const dollarUSLocale = Intl.NumberFormat('en-US');
-    console.log(mockComments);
+    console.log(comments);
     return (
         <Layout title={movieInfo.title} pageDescription={movieInfo.overview}>
             <div style={{backgroundImage: `url(https://image.tmdb.org/t/p/original${movieInfo.backdrop_path})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
@@ -71,7 +71,7 @@ const MovieExtended: FC<PropsWithChildren<Props>> = ({movieInfo, movieCast, movi
                     <h2>Videos</h2>
                     <VideoSection videoData={movieVideos}/>
                     <MovieRecommendations movieRecommendations={movieRecommendations} type={'movie'}/>
-                    <Comments comments={mockComments}/>
+                    <Comments comments={comments}/>
                 </div>
                 <div className={styles.sideBar}>
                     <div className={styles.sideBarSection}>
@@ -106,8 +106,7 @@ export const getServerSideProps: GetServerSideProps = async ( context) => {
     const {data: movieVideos} = await axios.get(`https://api.themoviedb.org/3/movie/${query.id}/videos?api_key=${process.env.NEXT_PUBLIC_TMDB}&language=en-US`);
     const {data: movieRecommendations} = await axios.get(`https://api.themoviedb.org/3/movie/${query.id}/recommendations?api_key=${process.env.NEXT_PUBLIC_TMDB}&language=en-US&page=1`);
     const {data: movieExternals} = await axios.get(`https://api.themoviedb.org/3/movie/${query.id}/external_ids?api_key=${process.env.NEXT_PUBLIC_TMDB}`);
-    const {data: mockComments} = await axios.get('https://jsonplaceholder.typicode.com/comments?postId=1');
-
+    const {data: comments} = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_MEDIA}/movie/${query.id}/comments`);
     return {
         props:{
             movieInfo,
@@ -115,7 +114,7 @@ export const getServerSideProps: GetServerSideProps = async ( context) => {
             movieVideos,
             movieRecommendations,
             movieExternals,
-            mockComments
+            comments
         }
     }
 }

@@ -121,6 +121,27 @@ export class MediaService {
     }
   }
 
+  async removeComment(id: string, user: User) {
+    try {
+      const commentOnDB = await this.commentRepository.findOne({where: {id: id}})
+      if(!commentOnDB) return;
+      if(commentOnDB.user.id !== user.id) return;
+      await this.commentRepository.delete(commentOnDB.id)
+    } catch (error) {
+      this.handleDBExceptions(error)
+    }
+  }
+
+  async getComments(mediaType: string, mediaId: string){
+    try {
+      const commentsOnDB = await this.commentRepository.find({where: {mediaType: mediaType, mediaId: mediaId}})
+      if(!commentsOnDB) return
+      return commentsOnDB
+    } catch (error) {
+      this.handleDBExceptions(error)
+    }
+  }
+
   update(id: number, updateMediaDto: UpdateMediaDto) {
     return `This action updates a #${id} media`;
   }

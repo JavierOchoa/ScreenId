@@ -40,9 +40,20 @@ export class MediaController {
     return this.mediaService.removeFromFavorites(removePayload, user);
   }
 
+  @Get(':type/:id/comments')
+  getComment(@Param('type') mediaType: string, @Param('id') mediaId: string) {
+    return this.mediaService.getComments(mediaType, mediaId);
+  }
+
   @Post(':type/:id/comments')
   @Auth()
   createComment(@Body() createCommentDto: CreateCommentDto, @GetUser() user: User) {
     return this.mediaService.addComment(createCommentDto, user);
+  }
+
+  @Delete(':type/:id/comments')
+  @Auth()
+  removeComment(@Body() id: string, @GetUser() user: User) {
+    return this.mediaService.removeComment(id, user);
   }
 }
