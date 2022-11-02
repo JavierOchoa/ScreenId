@@ -21,3 +21,27 @@
     margin: 0;
 }
 
+.commentLabelGroup{
+    margin: 0.5rem 0;
+}
+
+.commentBodyInput{
+    width: 30rem;
+    height: 15rem;
+}
+
+.newCommentButton {
+    display: flex;
+    justify-content: center;
+}
+
+.newCommentButton button {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    font-weight: bold;
+    border: none;
+    background-color: #06113c;
+    color: white;
+    border-radius: 0.2rem;
+    cursor: pointer;
+}

@@ -100,11 +100,11 @@ export class MediaService {
   }
 
   async findOneCommentByTypeID(mediaType: string, mediaId: string) {
-    let commentInDB: Comment;
+    let commentsInDB: Comment[];
     try {
-      commentInDB = await this.commentRepository.findOne({where: {mediaType, mediaId}, relations: {user: true}})
-      if(!commentInDB) return;
-      return commentInDB;
+      commentsInDB = await this.commentRepository.find({where: {mediaType, mediaId}, relations: {user: true}})
+      if(!commentsInDB) return;
+      return commentsInDB;
     } catch (error) {
       this.handleDBExceptions(error);
     }
@@ -134,7 +134,8 @@ export class MediaService {
 
   async getComments(mediaType: string, mediaId: string){
     try {
-      const commentsOnDB = await this.commentRepository.find({where: {mediaType: mediaType, mediaId: mediaId}})
+      // const commentsOnDB = await this.commentRepository.find({where: {mediaType: mediaType, mediaId: mediaId}})
+      const commentsOnDB = await this.findOneCommentByTypeID(mediaType, mediaId)
       if(!commentsOnDB) return
       return commentsOnDB
     } catch (error) {
