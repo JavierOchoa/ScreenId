@@ -69,7 +69,7 @@ const Account = () => {
                 }
 
             </form>
-            {/* //TODO: Change your email
+            {/* 
                 //TODO: Deactivate account
              */}
         </div>

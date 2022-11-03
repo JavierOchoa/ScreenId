@@ -127,6 +127,9 @@ export class MediaService {
       if(!commentOnDB) return;
       if(commentOnDB.user.id !== user.id) return;
       await this.commentRepository.delete(commentOnDB.id)
+      return {
+        successful: true
+      }
     } catch (error) {
       this.handleDBExceptions(error)
     }
