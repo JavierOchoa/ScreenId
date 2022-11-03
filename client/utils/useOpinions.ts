@@ -34,6 +34,10 @@ export default function useOpinions(){
     )
     return data;
   }
+
+  async function removeComment(commentId:string) {
+    // const {data} = await axios.delete
+  }
   
   return {newComment}
 }
