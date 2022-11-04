@@ -4,11 +4,13 @@ import { Comment } from '../interfaces'
 interface MediaComment {
   value: Comment[];
   currentSlice: number;
+  totalComments: number;
 }
 
 const initialState: MediaComment = {
   value: [],
   currentSlice: 3,
+  totalComments: 0
 }
 
 export const mediaCommentSlice = createSlice({
@@ -16,10 +18,14 @@ export const mediaCommentSlice = createSlice({
   initialState,
   reducers: {
     userComments: (state, action:PayloadAction<Comment[]>)=>{
-      state.value.push(...action.payload);
+      state.value = action.payload;
+      state.totalComments = action.payload.length;
     },
     addToSlice: (state) => {
       state.currentSlice += 5;
+    },
+    resetSliceCounter: (state)=>{
+      state.currentSlice = 3
     },
     cleanUserComments: (state) => {
       state.value = [];
@@ -27,6 +33,6 @@ export const mediaCommentSlice = createSlice({
   }
 })
 
-export const { userComments, addToSlice, cleanUserComments } = mediaCommentSlice.actions;
+export const { userComments, addToSlice, cleanUserComments, resetSliceCounter } = mediaCommentSlice.actions;
 
 export default mediaCommentSlice.reducer;

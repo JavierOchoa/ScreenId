@@ -6,17 +6,20 @@ import useOpinions from "../utils/useOpinions";
 import { useRouter } from 'next/router';
 
 interface Props {
-  comments: Comment[];
+    mediaId: number;
+    mediaType: string;
+    mediaComments: Comment[];
 }
 
-const Comments: FC<PropsWithChildren<Props>> = ({comments}) => {
+const Comments: FC<PropsWithChildren<Props>> = ({mediaId, mediaType, mediaComments}) => {
   const router = useRouter();
   const { isAuthenticated, user } = useAuth();
-  const { newComment } = useOpinions()
+  const { newComment, removeComment, commentsReceiver, comments, theresMoreComments, loadMoreComments } = useOpinions()
+
   const [openCommentForm, setOpenCommentForm] = useState(false);
+  commentsReceiver(mediaComments)
   
-  const handleNewCommentButton = () => openCommentForm === false ? setOpenCommentForm(true) : setOpenCommentForm(false);
-  
+  const handleNewCommentButton = () => !openCommentForm ? setOpenCommentForm(true) : setOpenCommentForm(false);
 
   const NewCommentButton: FC = () => {
     return (
@@ -24,6 +27,11 @@ const Comments: FC<PropsWithChildren<Props>> = ({comments}) => {
         <button onClick={()=>handleNewCommentButton()}>{!openCommentForm ? 'New Comment' : 'Cancel'}</button>
       </div>
     )
+  }
+
+  const handleCommentRemove = async (commentId: string) => {
+    await removeComment(commentId, mediaType, mediaId);
+    router.reload()
   }
 
   const handleCommentSubmit = async(e: SyntheticEvent) => {
@@ -35,7 +43,7 @@ const Comments: FC<PropsWithChildren<Props>> = ({comments}) => {
     const name = target.commentName.value;
     const body = target.commentBody.value;
     const currentRoute = router.asPath.split("/")
-    const response = await newComment({name, body, mediaType: currentRoute[1], mediaId: currentRoute[2]})
+    const response = await newComment({name, body, mediaType, mediaId})
     setOpenCommentForm(false)
     router.reload();
   }
@@ -79,7 +87,10 @@ const Comments: FC<PropsWithChildren<Props>> = ({comments}) => {
           comments.map((comment, i) => {
             return (
               <div key={comment.id} className={ comments[comments.length-1].id === comment.id ? 'null' : styles.individualComment}>
-                <p className={styles.commentName}>{comment.name} { (comment.user.email === user.email) && <button>Delete</button>}</p>
+                <p className={styles.commentName}>{comment.name} {
+                  (isAuthenticated && (comment.user.email === user.email)) &&
+                    <button onClick={()=>handleCommentRemove(comment.id)}>Delete</button>
+                }</p>
                 <p className={styles.commentUser}>By: {comment.user.fullName}</p>
                 <p className={styles.commentBody}>{comment.body}</p>
               </div>
@@ -87,6 +98,11 @@ const Comments: FC<PropsWithChildren<Props>> = ({comments}) => {
           })
         }
       </div>
+      {theresMoreComments &&
+          <div className={styles.loadMoreCommentsText}>
+            <p onClick={()=>loadMoreComments()}>Load More Comments</p>
+          </div>
+      }
       {openCommentForm && <NewCommentForm/>}
       {isAuthenticated && <NewCommentButton/>}
     </div>

@@ -9,10 +9,11 @@ import { Media } from './entities/media.entity';
 import { RemovePayload } from './interfaces/remove-payload.interface';
 import { Comment } from './entities/comment.entity';
 import { CreateCommentDto } from './dto/create-comment.dto';
+import { RemoveCommentDto } from './dto/remove-comment.dto';
 
 @Injectable()
 export class MediaService {
-  private readonly logger = new Logger('MediaService')
+  private readonly logger = new Logger('MediaService');
 
   constructor(
     @InjectRepository(Media)
@@ -117,32 +118,39 @@ export class MediaService {
       await this.commentRepository.save(commentOnDB);
       return commentOnDB;
     } catch (error) {
-      this.handleDBExceptions(error)
+      this.handleDBExceptions(error);
     }
   }
 
-  async removeComment(id: string, user: User) {
+  async removeComment(removeCommentDto: RemoveCommentDto, user: User) {
+    const { id } = removeCommentDto;
     try {
-      const commentOnDB = await this.commentRepository.findOne({where: {id: id}})
-      if(!commentOnDB) return;
-      if(commentOnDB.user.id !== user.id) return;
-      await this.commentRepository.delete(commentOnDB.id)
+      const commentOnDB = await this.commentRepository.findOne({
+        where: { id },
+        relations: { user: true },
+      });
+      if (!commentOnDB) return;
+      if (commentOnDB.user.id !== user.id) return;
+      await this.commentRepository.delete(commentOnDB.id);
       return {
-        successful: true
-      }
+        successful: true,
+      };
     } catch (error) {
-      this.handleDBExceptions(error)
+      this.handleDBExceptions(error);
     }
   }
 
   async getComments(mediaType: string, mediaId: string){
     try {
       // const commentsOnDB = await this.commentRepository.find({where: {mediaType: mediaType, mediaId: mediaId}})
-      const commentsOnDB = await this.findOneCommentByTypeID(mediaType, mediaId)
-      if(!commentsOnDB) return
-      return commentsOnDB
+      const commentsOnDB = await this.findOneCommentByTypeID(
+        mediaType,
+        mediaId,
+      );
+      if (!commentsOnDB) return;
+      return commentsOnDB;
     } catch (error) {
-      this.handleDBExceptions(error)
+      this.handleDBExceptions(error);
     }
   }
 
@@ -154,12 +162,14 @@ export class MediaService {
     return `This action removes a #${id} media`;
   }
 
-  private handleDBExceptions(e:any){
-    if(e.name === 'QueryFailedError') {
-      throw new BadRequestException ('Please check {id} is a number and type is {movie} or {tv}')
+  private handleDBExceptions(e: any) {
+    this.logger.error(e);
+    if (e.name === 'QueryFailedError') {
+      throw new BadRequestException(
+        'Please check {id} is a number and type is {movie} or {tv}',
+      );
     }
-    this.logger.error(e)
-    if(e.message) throw new BadRequestException(e)
+    if (e.message) throw new BadRequestException(e)
     throw new InternalServerErrorException('Unexpected, check server logs');
   }
 }

@@ -69,7 +69,8 @@ const Account = () => {
                 }
 
             </form>
-            {/* 
+            {/*
+            //TODO: Remove box if no favorites
                 //TODO: Deactivate account
              */}
         </div>

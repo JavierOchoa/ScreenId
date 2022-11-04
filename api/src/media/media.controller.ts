@@ -7,6 +7,7 @@ import { User } from '../auth/entities/user.entity';
 import { GetUser } from '../auth/decorators/get-user.decorator';
 import { RemovePayload } from './interfaces/remove-payload.interface';
 import { CreateCommentDto } from './dto/create-comment.dto';
+import {RemoveCommentDto} from "./dto/remove-comment.dto";
 
 @Controller('media')
 export class MediaController {
@@ -34,11 +35,7 @@ export class MediaController {
     return this.mediaService.update(+id, updateMediaDto);
   }
 
-  @Delete('/remove')
-  @Auth()
-  remove(@Body() removePayload: RemovePayload , @GetUser() user: User) {
-    return this.mediaService.removeFromFavorites(removePayload, user);
-  }
+
 
   @Get(':type/:id/comments')
   getComment(@Param('type') mediaType: string, @Param('id') mediaId: string) {
@@ -53,7 +50,14 @@ export class MediaController {
 
   @Delete(':type/:id/comments')
   @Auth()
-  removeComment(@Body() id: string, @GetUser() user: User) {
-    return this.mediaService.removeComment(id, user);
+  removeComment(@Body() removeCommentDto: RemoveCommentDto, @GetUser() user: User) {
+    console.log(removeCommentDto)
+    return this.mediaService.removeComment(removeCommentDto, user);
   }
+
+  // @Delete('/remove')
+  // @Auth()
+  // remove(@Body() removePayload: RemovePayload, @GetUser() user: User) {
+  //   return this.mediaService.removeFromFavorites(removePayload, user);
+  // }
 }

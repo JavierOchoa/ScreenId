@@ -49,3 +49,14 @@
 .deleteButton {
     justify-self: end;
 }
+
+.loadMoreCommentsText {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.loadMoreCommentsText p {
+    color: #06113c;
+    text-decoration: underline;
+}

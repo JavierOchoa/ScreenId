@@ -2,7 +2,7 @@ import { Media } from "./media.entity";
 import { User } from "../../auth/entities/user.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity({name: 'comment'})
+@Entity({ name: 'comment' })
 export class Comment {
     @PrimaryGeneratedColumn('uuid')
     id: string;

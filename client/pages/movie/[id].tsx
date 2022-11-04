@@ -22,7 +22,6 @@ interface Props {
 
 const MovieExtended: FC<PropsWithChildren<Props>> = ({movieInfo, movieCast, movieVideos, movieRecommendations, movieExternals, comments}) => {
     const dollarUSLocale = Intl.NumberFormat('en-US');
-    console.log(comments);
     return (
         <Layout title={movieInfo.title} pageDescription={movieInfo.overview}>
             <div style={{backgroundImage: `url(https://image.tmdb.org/t/p/original${movieInfo.backdrop_path})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
@@ -71,7 +70,7 @@ const MovieExtended: FC<PropsWithChildren<Props>> = ({movieInfo, movieCast, movi
                     <h2>Videos</h2>
                     {/* <VideoSection videoData={movieVideos}/> */}
                     <MovieRecommendations movieRecommendations={movieRecommendations} type={'movie'}/>
-                    <Comments comments={comments}/>
+                    <Comments mediaId={movieInfo.id} mediaType={"movie"} mediaComments={comments}/>
                 </div>
                 <div className={styles.sideBar}>
                     <div className={styles.sideBarSection}>
