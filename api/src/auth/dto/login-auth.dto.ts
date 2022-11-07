@@ -16,7 +16,7 @@ export class LoginUserDto {
     @MaxLength(50)
     @Matches(/(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
       message:
-        'The password must have a Uppercase, lowercase letter and a number',
+        'Password is incorrect',
     })
     password: string;
 }

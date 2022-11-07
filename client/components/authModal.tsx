@@ -1,5 +1,5 @@
 import styles from '../styles/authModal.module.css'
-import { FC, PropsWithChildren, useState } from 'react';
+import { FC, PropsWithChildren, useState, FormEvent } from 'react';
 import useAuth from '../utils/useAuth';
 
 interface Props {
@@ -9,21 +9,22 @@ interface Props {
 }
 
 const AuthModal: FC<PropsWithChildren<Props>> = ({show, type, onClose, children}) => {
-    const {login, signup} = useAuth();
+    const {login, signup, errorMessage} = useAuth();
     const [formType, setFormType] = useState(type);
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const form = e.target as HTMLFormElement;
         const formData = new FormData(form);
         const fullName = formData.get('name') as string;
         const email = formData.get('email') as string;
         const password = formData.get('password') as string;
+        const confirmPassword = formData.get('confirmPassword') as string;
         if(formType === 'login'){
-            login(email, password);
+            await login(email, password);
         }
         if(formType === 'signup'){
-            signup(fullName, email, password);
+            await signup(fullName, email, password, confirmPassword);
         }
     }
     
@@ -53,6 +54,12 @@ const AuthModal: FC<PropsWithChildren<Props>> = ({show, type, onClose, children}
                                 <label htmlFor="password">Password: </label>
                                 <input type="password" name="password" id="password" />
                             </div>
+                            {formType === 'signup' &&
+                                <div className={styles.formGroup}>
+                                    <label htmlFor="confirmPassword">Confirm Password: </label>
+                                    <input type="password" name="confirmPassword" id="confirmPassword" />
+                                </div>
+                            }
                             {formType === 'login' &&
                                 <p className={styles.authType} onClick={()=>setFormType('signup')}>Don't have an account yet?</p>
                             }
@@ -62,6 +69,7 @@ const AuthModal: FC<PropsWithChildren<Props>> = ({show, type, onClose, children}
                             <div className={styles.formGroup}>
                                 <button className={styles.button} type="submit">{formType === 'login' ? 'Login' : 'Signup'}</button>
                             </div>
+                            <p className={styles.errorMessage}>{errorMessage}</p>
                         </form>
                     }
                     {formType === 'content' && children}

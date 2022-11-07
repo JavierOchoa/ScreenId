@@ -12,42 +12,42 @@ import Image from "next/image";
 import movie from '../public/movie.svg';
 import tv from '../public/tv.svg';
 import Link from "next/link";
-import favoritesHelper from "../utils/favoritesHelper";
+import useFavorites from "../utils/useFavorites";
 
 interface Props {
     favoritesData?: IUserFavorite[]
 }
 
 const UserFavorites: FC<PropsWithChildren<Props>> = ({favoritesData}) => {
-    const favoriteMedia = useSelector((state: RootState) => state.userFavorites.value)
     const {isAuthenticated} = useAuth();
-    const {getFavorites} = favoritesHelper();
+    const {removeFromFavorites, favoriteMedia, emptyFavorites} = useFavorites();
     const dispatch = useDispatch();
-    useEffect(()=>{
-        console.log(isAuthenticated);
-        
-        if(isAuthenticated){
-            getFavorites()
-                .then(response => dispatch(favoriteItems(response!)))
-        }
+    // useEffect(()=>{
+    //     if(isAuthenticated){
+    //         getFavorites()
+    //             .then(response => dispatch(favoriteItems(response!)))
+    //     }
+    //     return () =>{
+    //         dispatch(cleanFavoriteItems())
+    //     }
+    // },[isAuthenticated])
 
-        return () =>{ 
-            dispatch(cleanFavoriteItems())
-        }
-    },[isAuthenticated])
-    console.log(favoriteMedia);
-    
+    if (emptyFavorites){
+        return <h3>No favorites</h3>
+    }
+
     return (
         <div className={styles.favoritesContainer}>
                 {favoriteMedia.map((media, i)=> {
                     return (
-                        <div className={styles.favoriteItem} style={i===0 ? {}:{borderTop: '1px solid black'}}>
+                        <div key={i} className={styles.favoriteItem} style={i===0 ? {}:{borderTop: '1px solid black'}}>
                             <Image src={media.type==='movie'? movie : tv} alt={media.type}/>
                             <Link href={`${media.type}/${media.id}`}>
                                 <a>
                                     <p className={styles.favoriteTitle}>{media.title}</p>
                                 </a>
                             </Link>
+                            <button onClick={()=>removeFromFavorites(media)} className={styles.removeButton}>REMOVE</button>
                         </div>
                     )
                 })

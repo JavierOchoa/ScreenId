@@ -2,19 +2,19 @@ import { IsEmail, IsString, MaxLength, MinLength, Matches } from "class-validato
 
 export class CreateAuthDto {
   @IsString()
-  @IsEmail()
-  email:string;
+  @IsEmail({}, { message: 'Email is required' })
+  email: string;
 
   @IsString()
   @MinLength(6)
   @MaxLength(50)
   @Matches(/(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
     message:
-      'The password must have a Uppercase, lowercase letter and a number',
+      'The password must have a Uppercase, lowercase letter and a number\n',
   })
   password: string;
 
   @IsString()
-  @MinLength(1)
+  @MinLength(1, { message: 'Name is required' })
   fullName: string;
 }

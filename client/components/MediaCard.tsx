@@ -1,9 +1,9 @@
-import {FC, PropsWithChildren} from "react";
+import {FC, PropsWithChildren, useEffect, useState} from "react";
 import {IUserFavorite, TrendingMovieResult, TrendingTvResult} from "../interfaces";
 import styles from "../styles/MediaCard.module.css";
 import Link from "next/link";
 import Image from "next/image";
-import favoritesHelper from '../utils/favoritesHelper'
+import useFavorites from '../utils/useFavorites'
 import useAuth from "../utils/useAuth";
 
 interface Props {
@@ -13,8 +13,19 @@ interface Props {
 
 let MediaCard:FC<PropsWithChildren<Props>> = ({movie, show})=>{
     const {isAuthenticated} = useAuth()
-    const {addToFavorites} = favoritesHelper();
+    const {addToFavorites, favoriteMedia, removeFromFavorites} = useFavorites();
+    const [isSaved, setIsSaved] = useState(false);
 
+    const currentMedia: IUserFavorite = {
+        id: movie?.id || show?.id || 0,
+        title: movie?.title || show?.name || '',
+        profilePath: movie?.poster_path || show?.poster_path || '',
+        type: movie ? 'movie' : 'tv'
+    }
+
+    const handleAddRemoveFavorites = () => {
+        !isSaved ? addToFavorites(currentMedia) : removeFromFavorites(currentMedia);
+    }
     const saveToFavorites = () => {
         const mediaToSave: IUserFavorite = {
             id: movie?.id || show?.id || 0,
@@ -22,15 +33,25 @@ let MediaCard:FC<PropsWithChildren<Props>> = ({movie, show})=>{
             profilePath: movie?.poster_path || show?.poster_path || '',
             type: movie ? 'movie' : 'tv'
         }
-        const savedMedia = addToFavorites(mediaToSave)
-        return savedMedia;
+        return addToFavorites(currentMedia);
     }
+
+    useEffect(()=>{
+        if(isAuthenticated &&
+            favoriteMedia.filter((media)=> (media.id === currentMedia.id && media.type === currentMedia.type)).length === 1
+        ) {
+            setIsSaved(true);
+        } else {
+            setIsSaved(false);
+        }
+    }, [isAuthenticated, favoriteMedia])
+
     return(
         <div className={styles.trendingCard}>
             <div className={styles.cardImageTitle}>
                 {isAuthenticated && 
-                    <div onClick={()=>saveToFavorites()} className={styles.likeButton}>
-                        <Image src="/save.svg" alt="save" width={20} height={20}/>
+                    <div onClick={()=>handleAddRemoveFavorites()} className={styles.likeButton}>
+                        <Image src={isSaved ? "/heart-filled.png" : "/heart.png"} alt="save" width={20} height={20}/>
                     </div>
                 }
                 <Link href={`/${movie ? `movie` : show ? 'tv' : null}/${movie?.id || show?.id || null}`}>

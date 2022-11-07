@@ -1,4 +1,4 @@
-import {FC, PropsWithChildren, SyntheticEvent, useState} from "react";
+import {FC, PropsWithChildren, SyntheticEvent, useEffect, useState} from "react";
 import {Comment} from '../interfaces';
 import styles from '../styles/Comments.module.css';
 import useAuth from "../utils/useAuth";
@@ -14,11 +14,14 @@ interface Props {
 const Comments: FC<PropsWithChildren<Props>> = ({mediaId, mediaType, mediaComments}) => {
   const router = useRouter();
   const { isAuthenticated, user } = useAuth();
-  const { newComment, removeComment, commentsReceiver, comments, theresMoreComments, loadMoreComments } = useOpinions()
+  const { newComment, removeComment, commentsReceiver, comments, theresMoreComments, loadMoreComments, handleSortOrder, sortOrder } = useOpinions()
 
   const [openCommentForm, setOpenCommentForm] = useState(false);
-  commentsReceiver(mediaComments)
-  
+
+  useEffect(()=>{
+    commentsReceiver(mediaComments)
+  }, [])
+
   const handleNewCommentButton = () => !openCommentForm ? setOpenCommentForm(true) : setOpenCommentForm(false);
 
   const NewCommentButton: FC = () => {
@@ -81,7 +84,13 @@ const Comments: FC<PropsWithChildren<Props>> = ({mediaId, mediaType, mediaCommen
 
   return (
     <div>
-      <h2>Comments</h2>
+      <div className={styles.commentsTopContainer}>
+        <h2>Comments</h2>
+        <div className={styles.commentSortingContainer}>
+          <p>Sorting by: </p>
+          <p onClick={()=>handleSortOrder()} className={styles.textUnderline}>{sortOrder}</p>
+        </div>
+      </div>
       <div className={styles.commentsContainer}>
         {
           comments.map((comment, i) => {
@@ -89,7 +98,7 @@ const Comments: FC<PropsWithChildren<Props>> = ({mediaId, mediaType, mediaCommen
               <div key={comment.id} className={ comments[comments.length-1].id === comment.id ? 'null' : styles.individualComment}>
                 <p className={styles.commentName}>{comment.name} {
                   (isAuthenticated && (comment.user.email === user.email)) &&
-                    <button onClick={()=>handleCommentRemove(comment.id)}>Delete</button>
+                    <button onClick={()=>handleCommentRemove(comment.id)} className={styles.deleteButton}>DELETE</button>
                 }</p>
                 <p className={styles.commentUser}>By: {comment.user.fullName}</p>
                 <p className={styles.commentBody}>{comment.body}</p>
@@ -100,7 +109,7 @@ const Comments: FC<PropsWithChildren<Props>> = ({mediaId, mediaType, mediaCommen
       </div>
       {theresMoreComments &&
           <div className={styles.loadMoreCommentsText}>
-            <p onClick={()=>loadMoreComments()}>Load More Comments</p>
+            <p onClick={()=>loadMoreComments()} className={styles.textUnderline}>Load More Comments</p>
           </div>
       }
       {openCommentForm && <NewCommentForm/>}

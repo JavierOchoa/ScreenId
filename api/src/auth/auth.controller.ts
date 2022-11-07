@@ -3,8 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { Auth } from './decorators/auth.decorator';
 import { GetUser } from './decorators/get-user.decorator';
-import { LoginUserDto } from './dto';
-import { CreateAuthDto } from './dto/create-auth.dto';
+import { AccountDeletionDto, CreateAuthDto, LoginUserDto} from './dto';
 import { PasswordUpdateDto } from './dto/password-update.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { User } from './entities/user.entity';
@@ -32,8 +31,11 @@ export class AuthController {
 
   @Post('/update')
   @Auth()
-  updatePassword(@GetUser() user: User, @Body () updatePasswordDto: PasswordUpdateDto){
-    return this.authService.updatePassword(user, updatePasswordDto)
+  updatePassword(
+    @GetUser() user: User,
+    @Body() updatePasswordDto: PasswordUpdateDto,
+  ) {
+    return this.authService.updatePassword(user, updatePasswordDto);
   }
 
   @Get(':id')
@@ -46,8 +48,12 @@ export class AuthController {
     return this.authService.update(+id, updateAuthDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authService.remove(+id);
+  @Delete('/delete')
+  @Auth()
+  deactivateUser(
+    @GetUser() user: User,
+    @Body() accountDeletionDto: AccountDeletionDto,
+  ) {
+    return this.authService.deactivateUser(user, accountDeletionDto);
   }
 }

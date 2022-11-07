@@ -1,5 +1,5 @@
 import { useSelector, useDispatch} from "react-redux";
-import { userComments, addToSlice, cleanUserComments, resetSliceCounter } from "../slices/commentSlice";
+import { userComments, addToSlice, cleanUserComments, resetSliceCounter, reverseComments } from "../slices/commentSlice";
 import { RootState } from "../store";
 import {useEffect, useState} from "react";
 import useAuth from './useAuth';
@@ -18,6 +18,11 @@ interface ICommentRemoveResponse{
   successful: boolean;
 }
 
+enum SortOptions {
+  Newest = "Newest",
+  Oldest = "Oldest"
+}
+
 export default function useOpinions(){
   const {userCookie} = useAuth();
   const commentsSelector = useSelector((state: RootState)=>state.mediaComments.value);
@@ -26,20 +31,18 @@ export default function useOpinions(){
 
   const [comments, setComments] = useState<Comment[]>([])
   const [theresMoreComments, setTheresMoreComments] = useState(false)
+  const [sortOrder, setSortOrder] = useState(SortOptions.Newest)
 
   const dispatch = useDispatch();
 
-  // useEffect(()=>{
-  //   dispatch(resetSliceCounter());
-  // },[])
+  useEffect(()=>{
+    dispatch(resetSliceCounter());
+  },[])
 
   useEffect(()=>{
     const commentsToReturn: Comment[] = commentsSelector.slice(0, currentSlice);
     setComments(commentsToReturn);
     currentSlice >= totalComments ? setTheresMoreComments(false) : setTheresMoreComments(true);
-    // return ()=> {
-    //   dispatch(resetSliceCounter());
-    // }
   }, [currentSlice, commentsSelector])
 
   function commentsReceiver(commentsReceived: Comment[]){
@@ -48,6 +51,11 @@ export default function useOpinions(){
 
   function loadMoreComments(){
     dispatch(addToSlice())
+  }
+
+  function handleSortOrder(){
+    sortOrder === "Newest" ? setSortOrder(SortOptions.Oldest) : setSortOrder(SortOptions.Newest);
+    dispatch(reverseComments())
   }
 
   async function newComment(comment:IComment) {
@@ -73,5 +81,6 @@ export default function useOpinions(){
       )
   }
   
-  return {newComment, removeComment, commentsReceiver, comments, totalComments, theresMoreComments, loadMoreComments}
+  return {newComment, removeComment, commentsReceiver, comments, totalComments, theresMoreComments, loadMoreComments,
+    handleSortOrder, sortOrder}
 }

@@ -39,13 +39,13 @@
     cursor: pointer;
     filter: hue-rotate(90deg);
     background-color: white;
-    padding: 0.2rem;
+    padding: 0.2rem 0.2rem 0 0.2rem;
+    fill: red;
 }
 
 .trendingCard:hover .likeButton {
     display: block;
     position: absolute;
-    fill: red;
     z-index: 100;
     margin: 0.5rem;
     border: none;

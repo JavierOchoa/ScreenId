@@ -51,13 +51,12 @@ export class MediaController {
   @Delete(':type/:id/comments')
   @Auth()
   removeComment(@Body() removeCommentDto: RemoveCommentDto, @GetUser() user: User) {
-    console.log(removeCommentDto)
     return this.mediaService.removeComment(removeCommentDto, user);
   }
 
-  // @Delete('/remove')
-  // @Auth()
-  // remove(@Body() removePayload: RemovePayload, @GetUser() user: User) {
-  //   return this.mediaService.removeFromFavorites(removePayload, user);
-  // }
+  @Delete('/remove')
+  @Auth()
+  remove(@Body() removePayload: RemovePayload, @GetUser() user: User) {
+    return this.mediaService.removeFromFavorites(removePayload, user);
+  }
 }

@@ -21,6 +21,9 @@ export const mediaCommentSlice = createSlice({
       state.value = action.payload;
       state.totalComments = action.payload.length;
     },
+    reverseComments: (state)=>{
+      state.value.reverse();
+    },
     addToSlice: (state) => {
       state.currentSlice += 5;
     },
@@ -33,6 +36,6 @@ export const mediaCommentSlice = createSlice({
   }
 })
 
-export const { userComments, addToSlice, cleanUserComments, resetSliceCounter } = mediaCommentSlice.actions;
+export const { userComments, addToSlice, cleanUserComments, resetSliceCounter, reverseComments } = mediaCommentSlice.actions;
 
 export default mediaCommentSlice.reducer;

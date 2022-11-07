@@ -47,16 +47,35 @@
 }
 
 .deleteButton {
-    justify-self: end;
+    padding: 0.2rem;
+    border: none;
+    background-color: #06113c;
+    color: white;
+    border-radius: 0.2rem;
+    cursor: pointer;
 }
 
 .loadMoreCommentsText {
     display: flex;
     justify-content: center;
+}
+
+.textUnderline {
+    color: #06113c;
+    text-decoration: underline;
     cursor: pointer;
 }
 
-.loadMoreCommentsText p {
-    color: #06113c;
-    text-decoration: underline;
+.commentsTopContainer {
+    display: flex;
+}
+
+.commentSortingContainer {
+    display: flex;
+    margin: auto 0 auto auto;
+}
+
+.commentSortingContainer p {
+    font-weight: bold;
+    padding: 0 0.5rem;
 }

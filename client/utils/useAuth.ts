@@ -7,16 +7,18 @@ import { IUserFavorite, UpdatedPasswordResponse, UserInfo } from "../interfaces"
 import { userInfo, cleanUserInfo } from "../slices/userInfoSlice";
 import { favoriteItems, cleanFavoriteItems} from "../slices/userFavoriteSlice";
 import { RootState } from "../store";
+import useFavorites from "./useFavorites";
 
 
 export default function useAuth(){
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const [userCookie, setUserCookie] = useState('')
+    const [userCookie, setUserCookie] = useState('');
+    const [errorMessage, setErrorMessage] = useState('')
     const user = useSelector((state: RootState) => state.userInfo.value)
-    const favoriteMedia = useSelector((state: RootState) => state.userFavorites.value)
     const router = useRouter();
     const dispatch = useDispatch();
+
 
     useEffect(()=>{
         const theCookie = getCookie('SID');
@@ -32,27 +34,42 @@ export default function useAuth(){
         if(isAuthenticated && !user.fullName){
             getUser(userCookie)
         }
+        // if(isAuthenticated) {
+        //     if(favoriteMedia.length===0) getFavorites()
+        // }
     }, [isAuthenticated])
 
     async function login(email: string, password:string){
         try{
             const {data} = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_AUTH}/login`, {email, password})
-            if(!data.token) return data;
+            if(!data.token) {
+                const {response} = data
+                console.log('sss')
+                if(data.statusCode === 400) setErrorMessage(data.message)
+            }
             setCookie('SID', data.token, {sameSite: 'strict', secure: true})
             router.reload()
-        } catch (e) {
-            console.log(e)
+        } catch (e:any) {
+            const {data} = e.response;
+            if (data.statusCode === 400 ) setErrorMessage(data.message[0])
+            setErrorMessage(data.message)
         }
     }
 
-    async function signup(fullName: string, email: string, password: string){
+    async function signup(fullName: string, email: string, password: string, confirmPassword: string){
+        if(password !== confirmPassword) {
+            setErrorMessage('Please type the same password on both fields')
+            return ;
+        }
         try {
             const {data} = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_AUTH}/register`, {fullName, email, password})
             if(!data.token) return data;
             setCookie('SID', data.token, {sameSite: 'strict', secure: true})
             router.reload()
-        } catch (e) {
-            console.log(e)
+        } catch (e:any) {
+            const {data} = e.response;
+            if (data.statusCode === 400 ) setErrorMessage(data.message[0])
+            setErrorMessage(data.message)
         }
     }
 
@@ -107,5 +124,20 @@ export default function useAuth(){
 
     }
 
-    return {signup, login, logout, isAuthenticated, user, userCookie, updatePassword, updateEmail, isLoading}
+    async function deleteAccount(currentPassword: string){
+        try {
+            const {data} = await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_AUTH}/delete`, {
+                data: {
+                    currentPassword,
+                }, headers : {
+                    Authorization: `Bearer ${userCookie}`
+                }
+            })
+            return data;
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    return {signup, login, logout, isAuthenticated, user, userCookie, updatePassword, updateEmail, isLoading, deleteAccount, errorMessage}
 }

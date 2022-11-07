@@ -17,3 +17,13 @@
 .favoriteTitle {
     padding: 0 1rem;
 }
+
+.removeButton {
+    /*padding: 0.2rem;*/
+    margin: 0.2rem 0 0.2rem auto;
+    border: none;
+    background-color: #06113c;
+    color: white;
+    border-radius: 0.2rem;
+    cursor: pointer;
+}

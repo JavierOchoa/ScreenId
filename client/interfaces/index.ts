@@ -17,3 +17,4 @@ export * from './userInfo';
 export * from './userFavorites';
 export * from './updatedPasswordResponse';
 export * from './comment';
+export * from './userDeactivation';
