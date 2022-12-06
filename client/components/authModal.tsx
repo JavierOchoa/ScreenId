@@ -61,7 +61,7 @@ const AuthModal: FC<PropsWithChildren<Props>> = ({show, type, onClose, children}
                                 </div>
                             }
                             {formType === 'login' &&
-                                <p className={styles.authType} onClick={()=>setFormType('signup')}>Don't have an account yet?</p>
+                                <p className={styles.authType} onClick={()=>setFormType('signup')}>Don&apos;t have an account yet?</p>
                             }
                             {formType === 'signup' &&
                                 <p className={styles.authType} onClick={()=>setFormType('login')}>Already have an account?</p>
