@@ -68,7 +68,7 @@ const MovieExtended: FC<PropsWithChildren<Props>> = ({movieInfo, movieCast, movi
                     <h2>Cast</h2>
                     <PeopleSection castPeople={movieCast}/>
                     <h2>Videos</h2>
-                    {/* <VideoSection videoData={movieVideos}/> */}
+                    <VideoSection videoData={movieVideos}/>
                     <MovieRecommendations movieRecommendations={movieRecommendations} type={'movie'}/>
                     <Comments mediaId={movieInfo.id} mediaType={"movie"} mediaComments={comments}/>
                 </div>
