@@ -22,4 +22,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 NEXT_PUBLIC_TMDB=yourTMDBapikey
 ```
 
-![preview](https://raw.githubusercontent.com/JavierOchoa/ScreenId/main/public/homepage.png)
+![preview](https://raw.githubusercontent.com/JavierOchoa/ScreenId/main/public/screenid.png)
