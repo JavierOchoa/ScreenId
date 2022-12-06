@@ -1,0 +1,22 @@
+.container {
+    margin: 2rem;
+}
+
+.sectionsContent {
+    display: flex;
+}
+
+.sections {
+    width: 20rem;
+}
+
+.content {
+    width: 50rem;
+    margin-left: 2rem;
+}
+
+.sectionName {
+    font-size: x-large;
+    font-weight: bold;
+    cursor: pointer;
+}

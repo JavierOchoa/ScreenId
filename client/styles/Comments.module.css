@@ -1,0 +1,81 @@
+.commentsContainer {
+    padding: 0.5rem;
+    margin: 0.8rem 0;
+    border-radius: 1rem;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.5);
+}
+
+.individualComment {
+    padding: 0 0.5rem;
+    border-bottom: 0.15rem dotted #06113c;
+}
+
+.commentName {
+    font-size: large;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.commentUser {
+    font-size: small;
+    margin: 0;
+}
+
+.commentLabelGroup{
+    margin: 0.5rem 0;
+}
+
+.commentBodyInput{
+    width: 30rem;
+    height: 15rem;
+}
+
+.newCommentButton {
+    display: flex;
+    justify-content: center;
+}
+
+.newCommentButton button {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    font-weight: bold;
+    border: none;
+    background-color: #06113c;
+    color: white;
+    border-radius: 0.2rem;
+    cursor: pointer;
+}
+
+.deleteButton {
+    padding: 0.2rem;
+    border: none;
+    background-color: #06113c;
+    color: white;
+    border-radius: 0.2rem;
+    cursor: pointer;
+}
+
+.loadMoreCommentsText {
+    display: flex;
+    justify-content: center;
+}
+
+.textUnderline {
+    color: #06113c;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.commentsTopContainer {
+    display: flex;
+}
+
+.commentSortingContainer {
+    display: flex;
+    margin: auto 0 auto auto;
+}
+
+.commentSortingContainer p {
+    font-weight: bold;
+    padding: 0 0.5rem;
+}

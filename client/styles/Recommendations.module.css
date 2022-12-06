@@ -1,0 +1,35 @@
+.recommendationsContainer {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.8rem;
+}
+.recommendationsCard {
+    flex: 0 0 auto;
+    height: 210px;
+    width: 280px;
+    margin: 0 0.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.5);
+    cursor: pointer;
+}
+
+.recommendationsImage {
+    border-radius: 1rem 1rem 0 0;
+    overflow: hidden;
+}
+
+.recommendationsTest{
+    display: flex;
+    justify-content: center;
+
+}
+
+.recommendationTitle {
+    font-weight: bold;
+    margin-right: 0.3rem;
+}
+
+.recommendationYear {
+    opacity: 0.8;
+}

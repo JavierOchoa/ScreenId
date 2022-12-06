@@ -1,0 +1,64 @@
+.navbar {
+    display: flex;
+    justify-content: center;
+    background-color: #06113C;
+}
+
+.listItems {
+    display: flex;
+    list-style-type: none;
+}
+
+.listItems li a {
+    margin-right: 3rem;
+    color: white;
+    font-size: large;
+    font-weight: bold;
+    text-decoration: none
+}
+
+.listItems li a:hover {
+    color: #68f24c;
+}
+
+.link{
+    text-decoration: none
+}
+
+.auth {
+    display: flex;
+    margin: 0 2rem 0 auto;
+    font-size: large;
+    font-weight: bold;
+    padding: 0.5rem;
+}
+
+.auth a, .auth button{
+    color: black;
+    text-decoration: none;
+    background-color: white;
+    align-content: center;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    margin: 0 0.5rem;
+}
+
+.authButton {
+    font-weight: bold;
+    font-size: large;
+    cursor: pointer;
+}
+
+.logo {
+    margin: 0 auto 0 2rem;
+    font-size: x-large;
+    font-weight: bold;
+    color: white;
+    padding: 0.5rem;
+    cursor: default;
+}
+
+.logo span {
+    color: #68f24c;
+}

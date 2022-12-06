@@ -1,0 +1,53 @@
+.trendingCard {
+    /*padding: 0 2rem;*/
+    display: flex;
+    margin: 0.5rem;
+    flex-direction: column;
+    align-items: center;
+    width: 180px;
+}
+
+.trendingCard a {
+    text-decoration: none;
+}
+
+.trendingCardMediaTitle{
+    font-weight: bold;
+    font-size: small;
+    text-align: center;
+    color: white;
+    padding: 0 1rem;
+}
+
+.coverImage {
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.coverImage:hover{
+    opacity: 30%;
+    transition-duration: .25s;
+}
+
+.cardImageTitle {
+    padding: 0 0 0.5rem;
+    border-radius: 0.5rem;
+    background-color: #06113C;
+}
+
+.likeButton {
+    display: none;
+    cursor: pointer;
+    filter: hue-rotate(90deg);
+    background-color: white;
+    padding: 0.2rem 0.2rem 0 0.2rem;
+    fill: red;
+}
+
+.trendingCard:hover .likeButton {
+    display: block;
+    position: absolute;
+    z-index: 100;
+    margin: 0.5rem;
+    border: none;
+    border-radius: 20%;
+}
