@@ -1,7 +1,7 @@
 import {FC, PropsWithChildren} from "react";
 import {GetServerSideProps} from "next";
 import axios from "axios";
-import {DetailedTV, MovieCredits, MovieVideos, ITVRecommendations, ExternalLinks} from "../../interfaces";
+import {DetailedTV, MovieCredits, MovieVideos, ITVRecommendations, ExternalLinks, Comment} from "../../interfaces";
 import {Layout} from "../../layouts";
 import styles from "../../styles/Movie.module.css";
 import Image from "next/image";
@@ -11,16 +11,18 @@ import Recommendations from "../../components/Recommendations";
 import SidebarSocials from "../../components/SidebarSocials";
 import Episode from "../../components/Episode";
 import Seasons from "../../components/Seasons";
+import Comments from "../../components/Comments";
 
 interface Props {
     TVData: DetailedTV
     TVCast: MovieCredits
     TVVideos: MovieVideos
     TVRecommendations: ITVRecommendations
-    TVExternals: ExternalLinks
+    TVExternals: ExternalLinks,
+    comments: Comment[];
 }
 
-const TVPage:FC<PropsWithChildren<Props>> = ({TVData, TVCast, TVVideos, TVRecommendations, TVExternals}) => {
+const TVPage:FC<PropsWithChildren<Props>> = ({TVData, TVCast, TVVideos, TVRecommendations, TVExternals, comments}) => {
     return(
         <Layout title={TVData.name} pageDescription={TVData.overview}>
             <div style={{backgroundImage: `url(https://image.tmdb.org/t/p/original${TVData.backdrop_path})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
@@ -81,6 +83,7 @@ const TVPage:FC<PropsWithChildren<Props>> = ({TVData, TVCast, TVVideos, TVRecomm
                     <h2>Videos</h2>
                     <VideoSection videoData={TVVideos}/>
                     <Recommendations tvRecommendations={TVRecommendations} type={'tv'}/>
+                    <Comments mediaId={TVData.id} mediaType={"tv"} mediaComments={comments}/>
                 </div>
                 <div className={styles.sideBar}>
                     <div className={styles.sideBarSection}>
@@ -117,13 +120,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const {data: TVVideos} = await axios.get(`https://api.themoviedb.org/3/tv/${query.id}/videos?api_key=${process.env.NEXT_PUBLIC_TMDB}&language=en-US`)
     const {data: TVRecommendations} = await axios.get(`https://api.themoviedb.org/3/tv/${query.id}/recommendations?api_key=${process.env.NEXT_PUBLIC_TMDB}&language=en-US&page=1`)
     const {data: TVExternals} = await axios.get(`https://api.themoviedb.org/3/tv/${query.id}/external_ids?api_key=${process.env.NEXT_PUBLIC_TMDB}`)
-
+    const {data: comments} = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_MEDIA}/tv/${query.id}/comments`);
     return{props:{
             TVData,
             TVCast,
             TVVideos,
             TVRecommendations,
-            TVExternals
+            TVExternals,
+            comments
         }
     }
 }
