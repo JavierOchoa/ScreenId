@@ -59,7 +59,7 @@ export default function useOpinions(){
   }
 
   async function newComment(comment:IComment) {
-    const {data} = await axios.post<Comment>(`${process.env.NEXT_PUBLIC_BACKEND_MEDIA}/${comment.mediaType}/${comment.mediaId}/comments`, {
+    const {data} = await axios.post<Comment>(`${process.env.NEXT_PUBLIC_BACKEND_MEDIA}/media/${comment.mediaType}/${comment.mediaId}/comments`, {
         name: comment.name,
         body: comment.body,
         mediaType: comment.mediaType,
@@ -72,7 +72,7 @@ export default function useOpinions(){
   }
 
   async function removeComment(commentId:string, mediaType: string, mediaId: number) {
-    const {data} = await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_MEDIA}/${mediaType}/${mediaId}/comments`, {
+    const {data} = await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_MEDIA}/media/${mediaType}/${mediaId}/comments`, {
         data: {
           id: commentId,
         },
