@@ -120,7 +120,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const {data: TVVideos} = await axios.get(`https://api.themoviedb.org/3/tv/${query.id}/videos?api_key=${process.env.NEXT_PUBLIC_TMDB}&language=en-US`)
     const {data: TVRecommendations} = await axios.get(`https://api.themoviedb.org/3/tv/${query.id}/recommendations?api_key=${process.env.NEXT_PUBLIC_TMDB}&language=en-US&page=1`)
     const {data: TVExternals} = await axios.get(`https://api.themoviedb.org/3/tv/${query.id}/external_ids?api_key=${process.env.NEXT_PUBLIC_TMDB}`)
-    const {data: comments} = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_MEDIA}/media/tv/${query.id}/comments`);
+    const {data: comments} = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND}/media/tv/${query.id}/comments`);
     return{props:{
             TVData,
             TVCast,

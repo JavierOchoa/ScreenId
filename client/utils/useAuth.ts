@@ -41,7 +41,7 @@ export default function useAuth(){
 
     async function login(email: string, password:string){
         try{
-            const {data} = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_AUTH}/auth/login`, {email, password})
+            const {data} = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/auth/login`, {email, password})
             if(!data.token) {
                 const {response} = data
                 console.log('sss')
@@ -62,7 +62,7 @@ export default function useAuth(){
             return ;
         }
         try {
-            const {data} = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_AUTH}/auth/register`, {fullName, email, password})
+            const {data} = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/auth/register`, {fullName, email, password})
             if(!data.token) return data;
             setCookie('SID', data.token, {sameSite: 'strict', secure: true})
             router.reload()
@@ -80,7 +80,7 @@ export default function useAuth(){
 
     async function getUser(cookie: string){
         try{
-            const {data} = await axios.get<UserInfo>(`${process.env.NEXT_PUBLIC_BACKEND_AUTH}/auth/user`, {
+            const {data} = await axios.get<UserInfo>(`${process.env.NEXT_PUBLIC_BACKEND}/auth/user`, {
                 headers: {Authorization: `Bearer ${cookie}`}
             })
             dispatch(userInfo(data))
@@ -91,7 +91,7 @@ export default function useAuth(){
 
     async function updatePassword(currentPassword: string, newPassword: string){
         try{
-            const { data } = await axios.post<UpdatedPasswordResponse>(`${process.env.NEXT_PUBLIC_BACKEND_AUTH}/auth/update`, {
+            const { data } = await axios.post<UpdatedPasswordResponse>(`${process.env.NEXT_PUBLIC_BACKEND}/auth/update`, {
                 currentPassword,
                 newPassword,
                 type: 'password',
@@ -107,7 +107,7 @@ export default function useAuth(){
 
     async function updateEmail(currentPassword: string, newEmail: string){
         try{
-            const { data } = await axios.post<UpdatedPasswordResponse>(`${process.env.NEXT_PUBLIC_BACKEND_AUTH}/auth/update`, {
+            const { data } = await axios.post<UpdatedPasswordResponse>(`${process.env.NEXT_PUBLIC_BACKEND}/auth/update`, {
                 currentPassword,
                 newEmail,
                 type: 'email',
@@ -126,7 +126,7 @@ export default function useAuth(){
 
     async function deleteAccount(currentPassword: string){
         try {
-            const {data} = await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_AUTH}/auth/delete`, {
+            const {data} = await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND}/auth/delete`, {
                 data: {
                     currentPassword,
                 }, headers : {

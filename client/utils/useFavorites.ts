@@ -34,7 +34,7 @@ export default function useFavorites() {
 
     async function addToFavorites(media: IUserFavorite){
         dispatch(addItemToFavorites(media))
-        const {data} = await axios.post<IUserFavorite>(`${process.env.NEXT_PUBLIC_BACKEND_MEDIA}/media/add`, {
+        const {data} = await axios.post<IUserFavorite>(`${process.env.NEXT_PUBLIC_BACKEND}/media/add`, {
                 id: media.id,
                 profilePath: media.profilePath,
                 title: media.title,
@@ -49,7 +49,7 @@ export default function useFavorites() {
     async function removeFromFavorites(media: IUserFavorite){
         const {id, type} = media
         dispatch(removeItemFromFavorites(media));
-        const {data} = await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_MEDIA}/media/remove`, {
+        const {data} = await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND}/media/remove`, {
             data: {
                 id,
                 type,
@@ -61,7 +61,7 @@ export default function useFavorites() {
 
     async function getFavorites() {
         try{
-            const {data} = await axios.get<IUserFavorite[]>(`${process.env.NEXT_PUBLIC_BACKEND_MEDIA}/media/favorites`, {
+            const {data} = await axios.get<IUserFavorite[]>(`${process.env.NEXT_PUBLIC_BACKEND}/media/favorites`, {
                 headers: {Authorization: `Bearer ${userCookie}`}
             })
 
